@@ -1,0 +1,11 @@
+debug/Cliente.o
+debug/EntradaRestaurante.o
+debug/Estado.o
+debug/Funciones.o
+debug/GrupoDeClientes.o
+debug/Peticion.o
+debug/Random.o
+debug/Restaurante.o
+debug/main.o
+debug/mainwindow.o
+debug/moc_mainwindow.o
