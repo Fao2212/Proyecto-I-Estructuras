@@ -5,12 +5,17 @@
 #include "Estado.h"
 #include "QDebug"
 #include "Mesa.h"
+#include "Cola.h"
 
-EntradaDelRestaurante::EntradaDelRestaurante(Estado * estado,int maximoDeGenerados,int tiempoDeGeneracion){
+
+EntradaDelRestaurante::EntradaDelRestaurante(Estado * estado,int maximoDeGenerados,int tiempoDeGeneracion,Mesa * matriz[5][4],int cantidadDeMesas){
     this->estado = estado;
     this ->maximoDeGenerados = maximoDeGenerados;
     this ->tiempoDeGeneracion = tiempoDeGeneracion;
     this-> consecutivoDeClientes = 0;
+    copiarMatriz(matriz);
+    this->cantidadDeMesas = cantidadDeMesas;
+    this->espera = new Cola<GrupoDeClientes>();
 }
 
 GrupoDeClientes * EntradaDelRestaurante::crearGrupo(){
@@ -27,17 +32,21 @@ GrupoDeClientes * EntradaDelRestaurante::crearGrupo(){
 
 void EntradaDelRestaurante :: asignarGrupo(GrupoDeClientes *grupo){
 
-    Mesa * mesa;//=random Mesa
-    mesa->llenarMesa(grupo);//Mesa tiene que estar vacia, mesa dentro de una matriz,
+    Mesa * mesa = seleccionMesa();
+    if(mesa != nullptr)
+        mesa->llenarMesa(grupo);
+    else
+        espera->encolar(grupo);
 
 }
 
 Mesa * EntradaDelRestaurante ::seleccionMesa(){
-    int i = 0;
-    //while(i < cantidadDeMesas && mesa->estaVacia())
-        //Mesa * mesa = Matriz de mesa[][] o una lilsta
-        //return mesa; Creo que esto seria mejor si va en el hilo
-    return nullptr;
+     Random::Shuffle(mesas,1000,cantidadDeMesas);
+     for(int i = 0;i < cantidadDeMesas;i++){
+         if(mesas[i]->estaVacia())
+             return mesas[i];
+     }
+     return nullptr;
 }
 /*int main(int argc, char *argv[])
 {
@@ -48,3 +57,17 @@ Mesa * EntradaDelRestaurante ::seleccionMesa(){
 }*/
 
 
+void EntradaDelRestaurante :: copiarMatriz(Mesa * matriz[5][4]){
+    for(int i = 0;i<5;i++){
+        for(int j = 0;j<4;j++){
+            if(matriz[i][j]!=nullptr)
+                this->mesas[i] = matriz[i][j];
+        }
+    }
+}
+
+void EntradaDelRestaurante :: mesaLiberada(){
+   Mesa * mesa = seleccionMesa();
+   if(mesa != nullptr)
+       mesa->llenarMesa(espera->desencolar());
+}

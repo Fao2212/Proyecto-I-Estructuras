@@ -3,7 +3,8 @@
 struct CocinaPostres{
 	
 	Cocinero * cocinero;
-	Cola * peticiones;
+    Cola<Peticion> * peticiones;
 	Estado * estado;
+    Cola<Peticion> * salida;
 	
 };

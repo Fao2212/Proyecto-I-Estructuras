@@ -6,18 +6,24 @@
 struct EntradaDelRestaurante{
 
 public:
-    Cola * espera;
-	double tiempoDeGeneracion;
-    int maximoDeGenerados;
+    Cola<GrupoDeClientes> * espera;
+    double tiempoDeGeneracion;
+    double tiempoDeGeneracionMinimo;
+    int maximoDeGenerados,minimoDeGenerados;
     Estado * estado;
     int consecutivoDeClientes;
+    Mesa * mesas[20];
+    int cantidadDeMesas;
 
-    EntradaDelRestaurante(Estado * estado,int maximoDeGenerados,int tiempoDeGeneracion);//Seteado por el  Restaurante que es lo que controla toda la configuracion inicial
+    EntradaDelRestaurante(int maximoDeGenerados,int tiempoDeGeneracionMinimo,int tiempoDeGeneracionMaximo,
+                          Mesa * matriz[5][4],int cantidadDeMesas);//Seteado por el  Restaurante que es lo que controla toda la configuracion inicial
     //Anadir constructores por defecto
 
     GrupoDeClientes * crearGrupo();
     void asignarGrupo(GrupoDeClientes* grupo);//Enviarlos a una mesa disponible aleatoria
     Mesa * seleccionMesa();
+    void copiarMatriz(Mesa * matriz[5][4]);
+    void mesaLiberada();
 };
 
 #endif // ENTRADARESTAURANTE_H

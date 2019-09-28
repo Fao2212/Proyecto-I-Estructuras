@@ -12,7 +12,7 @@ bool Cola<T> :: estaVacia(){
 }
 
 template<typename T>
-void Cola<T> :: encolar(T dato){
+void Cola<T> :: encolar(T * dato){
     Nodo<T> * nuevo = new Nodo<T>(dato);
     if (estaVacia())
 
@@ -31,7 +31,7 @@ void Cola<T> :: encolar(T dato){
 }
 template<typename T>
 
-Nodo<T> * Cola<T> :: desencolar(){
+T * Cola<T> :: desencolar(){
     Nodo<T> * borrado = primerNodo;
 
     if ((! estaVacia() && primerNodo -> siguiente == nullptr) || estaVacia())
@@ -47,3 +47,9 @@ Nodo<T> * Cola<T> :: desencolar(){
 
     return borrado;
 }
+
+template<typename T>
+T * Cola<T>:: siguienteEnCola(){
+    return primerNodo;
+}
+//Se puede insertar al inicio cuando aparece la prioridad

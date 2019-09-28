@@ -4,7 +4,7 @@
 struct Lavadero{
 	
 	Cocinero * cocinero;
-	Cola * peticiones;
+    Cola<Peticion> * peticiones;
 	Estado * estado;
 	
 };

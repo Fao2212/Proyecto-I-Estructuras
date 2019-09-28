@@ -24,10 +24,13 @@ SOURCES += \
     GrupoDeClientes.cpp \
     ListaSimple.cpp \
     Mesa.cpp \
+    Mesero.cpp \
     Peticion.cpp \
     Pila.cpp \
     Random.cpp \
     Restaurante.cpp \
+    TablaPlatos.cpp \
+    Utilidades.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -84,6 +87,8 @@ HEADERS += \
     Random.h \
     Restaurante.h \
     Structs.h \
+    TablaPlatos.h \
+    ThreadMesero.h \
     Utilidades.h \
     mainwindow.h
 

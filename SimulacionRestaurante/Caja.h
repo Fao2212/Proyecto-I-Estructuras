@@ -4,7 +4,7 @@ struct Caja{
 public:
 
 	Cajero * cajero;
-	Cola * peticiones;
+    Cola<Peticion> * peticiones;
 	Estado * estado;
 	
 };

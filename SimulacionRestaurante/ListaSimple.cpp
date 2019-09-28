@@ -70,3 +70,16 @@ Nodo<T> * ListaSimple<T> :: buscar(T buscado){
 
     return nullptr;
 }
+
+template<typename T>
+int ListaSimple<T>:: largo(){
+    Nodo<T> * temp = primerNodo;
+    int lar = 0;
+    while (temp != nullptr){
+
+        lar++;
+        temp = temp -> siguiente;
+
+    }
+    return lar;
+}

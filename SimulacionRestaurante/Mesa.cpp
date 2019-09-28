@@ -9,7 +9,6 @@ Mesa :: Mesa(int consecutivo){
     this->estado = new Estado();
     this->cuenta = nullptr;
     this->historial = nullptr;
-    this->peticion = nullptr;
     this->TiempoDeComida = 1;//Siempre empieza con la entrada
     this->numeroDeMesa = consecutivo;
     this->asientosOcupados = 0;
@@ -27,7 +26,7 @@ bool Mesa :: estaVacia(){
 void Mesa :: llenarMesa(GrupoDeClientes * grupo){
     setGrupo(grupo);
     this->asientosOcupados = grupo->groupSize();
-    this->peticion = new Peticion(this,grupo->numeroDeGrupo);
+    grupo->sentarEnMesa(this);
 }
 
 void Mesa :: vaciarMesa(){
@@ -38,4 +37,11 @@ void Mesa :: vaciarMesa(){
 Cuenta * Mesa :: pagarCuenta(){
     vaciarMesa();
     return cuenta;
+}
+
+bool Mesa :: necesitaMesero(){
+    if(grupo->listoParaOrdenar() == true)
+        return  true;
+    else
+        return false;
 }

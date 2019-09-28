@@ -16,22 +16,37 @@
 struct Restaurante{
 public:
     int cantidadDeMesas;
-    int cantidadDeMeseros;
+    int cantidadDeMeseros;//Todo esto pudo ser un array
+    int tiempoDeGeneracionMinimo,tiempoDeGeneracionMaximo;
+    int tiempoMinimoEntrada,tiempoMaximoEntrada,probabildadEntrada
+        ,tiempoMinimoPrincipal,tiempoMaximoPrincipal,probabilidadPrincipal
+        ,tiempoMinimoPostre,tiempoMaximoPostre,probabilidadPostre;
     EntradaDelRestaurante * entrada;
-    ListaSimple * meseros;
+    ListaSimple<Mesero> * meseros;
     Mesa * matriz[5][4] = {{nullptr}};
     int consecutivoDeMesa;
     QString nombre;
+    TablaPlatos * tabla;
+    CocinaEnsaladas * cocinaEntradas;
+    CocinaPrincipal * cocinaPrincipal;
+    CocinaPostres * cocinaPostres;
+    Lavadero * lavadero;
+    Caja * caja;
+    Menu * menu;
 	//Hilos
 
     Restaurante(EntradaDelRestaurante entrada);
+    Restaurante();
+
     void cambiarTiempoMesero();
     void cambiarTiempoCocinero();
     void cambiarTiempoLavadero();
     void cambiarTiempoCajero();
     void cambiarModoCaja();
+    void cambiarTiempoPreparacionPlato();
     void cambiarProbabilidadPlato();
-    void cambiarTiempoDeConsumoPlato();
+    void cambiarTiempoMinimoDeConsumoPlato();
+    void cambiarTiempoMaximoDeConsumoPlato();
     void cambiarCantidadDeMeseros();
     void cambiarEstado();//De quien quiero cambiar el estado
     void setEntrada(int tiempoDeGeneracion,Estado * estado,int maximoDeGenerados);
@@ -53,7 +68,6 @@ public:
     void setNumeroDeMesas();
     void crearMatriz();
     int * getDisponible();
-    Restaurante();
 	
     //Aadir configuracion por defecto
 };

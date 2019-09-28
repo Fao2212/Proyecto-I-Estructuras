@@ -2,16 +2,22 @@
 #include "QtDebug"
 #include "Mesa.h"
 #include "ListaSimple.cpp"
+#include "EntradaRestaurante.h"
+#include "TablaPlatos.h"
+#include "CocinaEnsaladas.h"
+#include "CocinaPostres.h"
+#include "CocinaPrincipal.h"
+#include "Caja.h"
+#include "Lavadero.h"
+#include "Menu.h"
 
 Restaurante::Restaurante(){
-    this->consecutivoDeMesa = 0;
-    this->meseros = new ListaSimple<Mesero>();
+    initRestaurante();
 }
 
 void Restaurante :: crearMatriz(){
 
    int mesas = this->cantidadDeMesas;
-//Que pasa ccuando se ingresan 0 mesas no entra todo queda en 0
    for(int i =0;i < mesas;i++){
        int * coordenadas = getDisponible();
        if(coordenadas != nullptr)
@@ -20,7 +26,7 @@ void Restaurante :: crearMatriz(){
    }
 }
 
- int * Restaurante :: getDisponible(){
+ int * Restaurante :: getDisponible(){//devuelve un par disponible para asignar a la matriz
      static int coordenadas[2] = {0};
      for(int i = 0;i <5;i++){
          for(int j = 0;j<4;j++){
@@ -34,19 +40,38 @@ void Restaurante :: crearMatriz(){
      return nullptr;
  }
 
-/* int main(int argc, char *argv[])
- {
-     Restaurante * r = new Restaurante();
-     //Mesa * m = new Mesa();
-     //qDebug ()<< m;
-     r->crearMatriz();// = m;
-     qDebug()<<r->matriz[0][0];
-     qDebug()<<r->matriz[0][1];
-     qDebug()<<r->matriz[0][2];
-     qDebug()<<r->matriz[0][3];
-     qDebug()<<r->matriz[1][0];
-     qDebug()<<r->matriz[1][1];
-     qDebug()<<r->matriz[1][2];
-     qDebug()<<r->matriz[1][3];
-     return 0;
- }*/
+ void Restaurante:: initRestaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nombre,int tiempoDeGeneracionMinimo
+                                    ,int tiempoDeGeneracionMaximo,int tiempoMinimoEntrada, int tiempoMaximoEntrada,int probabildadEntrada
+                                    ,int tiempoMinimoPrincipal,int tiempoMaximoPrincipal, int probabilidadPrincipal
+                                    ,int tiempoMinimoPostre,int tiempoMaximoPostre,int probabilidadPostre){
+     this->consecutivoDeMesa = 0;
+     this->cantidadDeMesas = cantidadDeMesas;
+     this->cantidadDeMeseros = cantidadDeMeseros;
+     this->tiempoDeGeneracionMinimo = tiempoDeGeneracionMinimo;
+     this->tiempoDeGeneracionMaximo = tiempoDeGeneracionMaximo;
+     this->tiempoMinimoPostre = tiempoMinimoPostre;
+     this->tiempoMaximoPostre = tiempoMaximoPostre;
+     this-> tiempoMaximoEntrada = tiempoMaximoEntrada;
+     this-> tiempoMinimoEntrada = tiempoMinimoEntrada;
+     this->tiempoMaximoPrincipal =tiempoMaximoPrincipal;
+     this->tiempoMinimoPrincipal = tiempoMinimoPrincipal;
+     this->probabilidadPrincipal = probabilidadPrincipal;
+     this->probabildadEntrada = probabildadEntrada;
+     this->probabilidadPostre = probabilidadPostre;
+     this->nombre = nombre;
+     crearMatriz();
+     this->entrada = new EntradaDelRestaurante(6,this->tiempoDeGeneracionMinimo,this->tiempoDeGeneracionMaximo,
+                                               this->matriz,this->cantidadDeMesas);
+     this->meseros = new ListaSimple<Mesero>();
+     //Falta crear el menu puedo cambiar la lista simple por una circular
+     this->tabla = new TablaPlatos(this->tiempoMinimoEntrada,this->tiempoMaximoEntrada,this->probabildadEntrada
+                                   ,this->tiempoMinimoPrincipal,this->tiempoMaximoPrincipal,this->probabilidadPrincipal
+                                   ,this->tiempoMinimoPostre,this->tiempoMaximoPostre,this->probabilidadPostre);
+     this->cocinaEntradas = new CocinaEnsaladas();
+     this->cocinaPostres = new CocinaPostres();
+     this->cocinaPrincipal = new CocinaPrincipal();
+     this->lavadero = new Lavadero();
+     this->caja = new Caja();
+     this->menu = new Menu();
+
+ }//Si se quiere hacer un init default llamar la funcion con valores default

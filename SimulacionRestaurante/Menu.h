@@ -1,1 +1,4 @@
 //Implementar tarea
+struct Menu{
+
+};

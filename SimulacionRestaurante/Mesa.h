@@ -4,11 +4,11 @@ struct Mesa{
     GrupoDeClientes * grupo;
 	Estado * estado;
 	Cuenta * cuenta;
-	ListaSimple * historial;
-	Peticion * peticion;
+    ListaSimple<Mesa> * historial;
     int TiempoDeComida;//1 para entrada 2 para plato principal 3 para postre
 	int numeroDeMesa;
     int asientosOcupados;
+    bool vacia;
     //Un estadoActual
 	
     Mesa(int consecutivo);
@@ -21,6 +21,7 @@ struct Mesa{
     Cuenta * pagarCuenta();//Vaciar la mesa y enviarla a disponible
     void reservada();
     void showInfo();
+    bool necesitaMesero();
     //Agregar a la cuenta
 
 };//El historial es lo que tiene la mesa en ese momento

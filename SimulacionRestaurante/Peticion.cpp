@@ -4,7 +4,7 @@
 
 Peticion::Peticion(Mesa * mesa,int grupo){
 
-    this->fase = PEDIRENTRADA;
+    this->fase = CREADA;
     this->mesa = mesa;
     this->grupo = grupo;
 
