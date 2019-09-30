@@ -2,14 +2,14 @@
 #include "Estado.h"
 #include "GrupoDeClientesBORRADOR.h"
 
-Peticion::Peticion(Mesa * mesa,Estado * estado,int grupo){
+Peticion::Peticion(Mesa * mesa,int grupo){
 
-    this->fase = 1;
-    this->tiempo = 111111;
+    this->fase = CREADA;
     this->mesa = mesa;
-    this->estado = estado;
-    this->responsable = "clientes";
     this->grupo = grupo;
 
+}
 
+void Peticion :: setFase(Fase state){
+    this->fase = state;
 }

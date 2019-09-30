@@ -1,8 +1,6 @@
-#ifndef INGREDIENTE_H
-#define INGREDIENTE_H
+#include "Structs.h"
+#include "qstring.h"
+#include "ListaSimple.h"
 
-struct Ingrediente{
-    int aImplementar;
-};
-
-#endif // INGREDIENTE_H
+ListaSimple<QString> * ingredientes = new ListaSimple<QString>();
+ingredientes

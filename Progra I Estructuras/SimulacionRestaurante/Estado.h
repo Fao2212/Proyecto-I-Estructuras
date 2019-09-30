@@ -6,6 +6,7 @@ struct Estado{
 
     Estado();
 
+    void cambioDeEstado();
 };
 
 #endif // ESTADO_H

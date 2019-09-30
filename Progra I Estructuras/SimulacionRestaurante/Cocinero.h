@@ -3,9 +3,11 @@
 struct Cocinero{
 	
 	Estado * estado;
-	Cola * peticiones;
+    Cola<Peticion> * peticiones;
 	int tiempo;
 	int atendidos;
+
+    Cocinero();
 	
     bool estaCocinando();
     void tomarOrden();

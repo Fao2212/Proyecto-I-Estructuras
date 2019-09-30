@@ -1,11 +1,16 @@
 release/Cliente.o
+release/Cola.o
 release/EntradaRestaurante.o
 release/Estado.o
 release/Funciones.o
 release/GrupoDeClientes.o
+release/Mesa.o
+release/Mesero.o
 release/Peticion.o
+release/Pila.o
 release/Random.o
 release/Restaurante.o
+release/TablaPlatos.o
 release/main.o
 release/mainwindow.o
 release/moc_mainwindow.o

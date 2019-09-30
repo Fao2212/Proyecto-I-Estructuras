@@ -1,14 +1,20 @@
 #ifndef NODO_H
 #define NODO_H
 
-struct Nodo {
+template<typename T>
+struct Nodo{
 public:
-    Nodo * nodo;
-    int dato;
+    Nodo * siguiente;
+    T dato;
     
     Nodo(){
-        nodo = nullptr;
-        
+        siguiente = nullptr;
+        this->dato = nullptr;
+    }
+
+    Nodo(T dato){
+        siguiente = nullptr;
+        this-> dato = dato;
     }
     
 };

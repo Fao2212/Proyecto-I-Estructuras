@@ -4,9 +4,18 @@ struct GrupoDeClientes{
 	int reserva;
     Cliente * grupo[6];
     int numeroDeGrupo;
+    Peticion * peticion;
+    Mesa * mesa;
 
     GrupoDeClientes();
-    int groupSize();
-    int generarReserva();
 
+    int groupSize();
+    int generarReserva();//tiene que comparar si el grupo coincide con la reserva ccrreada por el restaurante
+    void generarOrden();
+    void sentarEnMesa(Mesa * mesa);
+    bool listoParaOrdenar();
+    void SetFasePeticion(Peticion * peticion);
+    void setTodosEsperando(bool esperando);
+    void setTodosComiendo(bool comiendo);
+    void recibirPeticion();
 };

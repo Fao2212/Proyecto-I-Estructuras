@@ -17,14 +17,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Cliente.cpp \
+    CocinaEnsalada.cpp \
+    CocinaPostres.cpp \
+    CocinaPrincipal.cpp \
+    Cocinero.cpp \
+    Cola.cpp \
     EntradaRestaurante.cpp \
     Estado.cpp \
     Funciones.cpp \
     GrupoDeClientes.cpp \
+    LavaPlatos.cpp \
+    Lavadero.cpp \
+    ListaSimple.cpp \
     Mesa.cpp \
+    Mesero.cpp \
     Peticion.cpp \
+    Pila.cpp \
     Random.cpp \
     Restaurante.cpp \
+    TablaPlatos.cpp \
+    Utilidades.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -81,6 +93,9 @@ HEADERS += \
     Random.h \
     Restaurante.h \
     Structs.h \
+    TablaPlatos.h \
+    ThreadMesero.h \
+    Utilidades.h \
     mainwindow.h
 
 FORMS += \

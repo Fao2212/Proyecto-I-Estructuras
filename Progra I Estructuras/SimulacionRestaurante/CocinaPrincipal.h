@@ -3,7 +3,10 @@
 struct CocinaPrincipal{
 	
     Cocinero * cocineros[3];
-	Cola * peticiones;
+    Cola<Peticion> * peticiones;
 	Estado * estado;
+    Cola<Peticion> * salida;
+
+    CocinaPrincipal();
 	
 };

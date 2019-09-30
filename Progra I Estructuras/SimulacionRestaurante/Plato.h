@@ -3,11 +3,11 @@
 
 struct Plato{
 	//Se puede usar la tarea de recetas
-	int tipo;
+    Tipo tipo;
 	int tiempoDePreparacion;
     QString nombre;
 	int tiempoDeLavado;
 	double precio;
-    Ingrediente ingredientes;
+    Ingrediente * ingredientes;
 	
 };

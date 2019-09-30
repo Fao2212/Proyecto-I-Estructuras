@@ -3,7 +3,10 @@
 struct CocinaEnsaladas{
 	
 	Cocinero * cocinero;
-	Cola * peticiones;
+    Cola<Peticion> * peticiones;
 	Estado * estado;
+    Cola<Peticion> * salida;
+
+    CocinaEnsaladas();
 	
 };
