@@ -8,10 +8,12 @@
 #include "Cola.h"
 
 
-EntradaDelRestaurante::EntradaDelRestaurante(Estado * estado,int maximoDeGenerados,int tiempoDeGeneracion,Mesa * matriz[5][4],int cantidadDeMesas){
-    this->estado = estado;
+EntradaDelRestaurante::EntradaDelRestaurante(int maximoDeGenerados,int tiempoDeGeneracionMinimo,int tiempoDeGeneracionMaximo,
+                                             Mesa * matriz[5][4],int cantidadDeMesas){
+    this->estado = new Estado();
     this ->maximoDeGenerados = maximoDeGenerados;
-    this ->tiempoDeGeneracion = tiempoDeGeneracion;
+    this ->tiempoDeGeneracion = tiempoDeGeneracionMaximo;
+    this->tiempoDeGeneracionMinimo = tiempoDeGeneracionMinimo;
     this-> consecutivoDeClientes = 0;
     copiarMatriz(matriz);
     this->cantidadDeMesas = cantidadDeMesas;
@@ -41,7 +43,7 @@ void EntradaDelRestaurante :: asignarGrupo(GrupoDeClientes *grupo){
 }
 
 Mesa * EntradaDelRestaurante ::seleccionMesa(){
-     Random::Shuffle(mesas,1000,cantidadDeMesas);
+     Random::Shuffle(mesas,cantidadDeMesas);
      for(int i = 0;i < cantidadDeMesas;i++){
          if(mesas[i]->estaVacia())
              return mesas[i];
@@ -69,5 +71,5 @@ void EntradaDelRestaurante :: copiarMatriz(Mesa * matriz[5][4]){
 void EntradaDelRestaurante :: mesaLiberada(){
    Mesa * mesa = seleccionMesa();
    if(mesa != nullptr)
-       mesa->llenarMesa(espera->desencolar());
+       mesa->llenarMesa(espera->desencolar()->dato);
 }

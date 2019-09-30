@@ -1,6 +1,6 @@
+#include "Cola.h"
 #include "CocinaEnsaladas.h"
 #include "Cocinero.h"
-#include "Cola.h"
 #include "Estado.h"
 
 CocinaEnsaladas :: CocinaEnsaladas(){
@@ -9,3 +9,4 @@ CocinaEnsaladas :: CocinaEnsaladas(){
     this->estado = new Estado();
     this->salida = new Cola<Peticion>();
 }
+

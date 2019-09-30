@@ -24,9 +24,10 @@ void Restaurante :: crearMatriz(){
    int mesas = this->cantidadDeMesas;
    for(int i =0;i < mesas;i++){
        int * coordenadas = getDisponible();
-       if(coordenadas != nullptr)
+       if(coordenadas != nullptr){
            this->consecutivoDeMesa += 1;
            matriz[coordenadas[0]][coordenadas[1]] = new Mesa(this->consecutivoDeMesa);
+       }
    }
 }
 
@@ -79,7 +80,7 @@ Restaurante:: Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nomb
      this->cocinaPrincipal = new CocinaPrincipal();
      this->lavadero = new Lavadero();
      this->caja = new Caja();
-     this->menu = new Menu();
+     //this->menu = new Menu();
      qDebug()<<"Creando meseros";
      setMeseros();
      qDebug()<<"Meseros creados";
@@ -101,11 +102,11 @@ Restaurante:: Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nomb
     int j = 0 ;
     while(temp != nullptr){
         while(i<repartir && j<cantidadDeMesas){
-            temp->dato.mesasAsignadas[i] = mesas[j];//CAMBIAR
+            temp->dato->mesasAsignadas[i] = mesas[j];//CAMBIAR
             i++;
             j++;
         }
-        temp->dato.numeroMesasAsignadas = i;
+        temp->dato->numeroMesasAsignadas = i;
         i = 0;
         temp = temp->siguiente;
     }

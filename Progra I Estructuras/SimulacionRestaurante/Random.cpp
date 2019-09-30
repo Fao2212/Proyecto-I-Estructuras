@@ -23,7 +23,12 @@ int Random :: RandomRange(int min, int max){
 }
 
 //convertir en template con typename e int
-int Random :: Shuffle(Mesa * array[20],int seed,int nonulos){
-    std::random_shuffle(&array[0],&array[nonulos]);
-    std::random_shuffle(&array[0],&array[nonulos], seed);
+void Random :: Shuffle(Mesa * array[20],int nonulos){
+    for(int i = 0; i < nonulos;i++){
+        int index = RandomRange(0,nonulos);
+
+        Mesa * temp = array[i];
+        array[i] = array[index];
+        array[index] = temp;
+    }
 }

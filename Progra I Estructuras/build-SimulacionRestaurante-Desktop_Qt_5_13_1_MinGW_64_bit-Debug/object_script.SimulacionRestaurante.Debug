@@ -1,9 +1,15 @@
 debug/Cliente.o
+debug/CocinaEnsalada.o
+debug/CocinaPostres.o
+debug/CocinaPrincipal.o
+debug/Cocinero.o
 debug/Cola.o
 debug/EntradaRestaurante.o
 debug/Estado.o
 debug/Funciones.o
 debug/GrupoDeClientes.o
+debug/LavaPlatos.o
+debug/Lavadero.o
 debug/Mesa.o
 debug/Mesero.o
 debug/Peticion.o
@@ -11,6 +17,7 @@ debug/Pila.o
 debug/Random.o
 debug/Restaurante.o
 debug/TablaPlatos.o
+debug/Utilidades.o
 debug/main.o
 debug/mainwindow.o
 debug/moc_mainwindow.o
