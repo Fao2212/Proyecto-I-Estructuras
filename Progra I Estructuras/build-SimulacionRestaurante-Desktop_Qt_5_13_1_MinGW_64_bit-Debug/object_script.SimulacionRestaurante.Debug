@@ -10,6 +10,7 @@ debug/Funciones.o
 debug/GrupoDeClientes.o
 debug/LavaPlatos.o
 debug/Lavadero.o
+debug/ListaSimple.o
 debug/Mesa.o
 debug/Mesero.o
 debug/Peticion.o
@@ -17,6 +18,7 @@ debug/Pila.o
 debug/Random.o
 debug/Restaurante.o
 debug/TablaPlatos.o
+debug/ThreadEntradaRestaurante.o
 debug/Utilidades.o
 debug/main.o
 debug/mainwindow.o

@@ -8,6 +8,7 @@ GrupoDeClientes::GrupoDeClientes(){
     }
     this->reserva = generarReserva();
     this->numeroDeGrupo = 1;
+    this->mesa = nullptr;
 
 }
 

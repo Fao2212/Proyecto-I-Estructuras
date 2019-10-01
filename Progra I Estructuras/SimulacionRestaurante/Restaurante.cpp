@@ -1,7 +1,7 @@
 #include "Restaurante.h"
 #include "QtDebug"
 #include "Mesa.h"
-#include "ListaSimple.cpp"
+#include "ListaSimple.h"
 #include "EntradaRestaurante.h"
 #include "TablaPlatos.h"
 #include "CocinaEnsaladas.h"
@@ -113,10 +113,13 @@ Restaurante:: Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nomb
  }
 
  void Restaurante :: copiarMatriz(Mesa * matriz[5][4]){
+     int k = 0;
      for(int i = 0;i<5;i++){
          for(int j = 0;j<4;j++){
-             if(matriz[i][j]!=nullptr)
-                 this->mesas[i] = matriz[i][j];
+             if(matriz[i][j]!=nullptr){
+                 this->mesas[k] = matriz[i][j];
+                 k ++;
+                }
          }
      }
  }
@@ -141,3 +144,4 @@ Restaurante:: Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nomb
  void Restaurante :: cambiarTiempoPreparacionPlato(Plato * plato, int tiempo){
      plato->tiempoDePreparacion = tiempo;
  }
+

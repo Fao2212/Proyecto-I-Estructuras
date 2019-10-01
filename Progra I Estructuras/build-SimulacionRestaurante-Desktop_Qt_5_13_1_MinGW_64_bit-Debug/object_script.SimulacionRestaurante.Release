@@ -10,6 +10,7 @@ release/Funciones.o
 release/GrupoDeClientes.o
 release/LavaPlatos.o
 release/Lavadero.o
+release/ListaSimple.o
 release/Mesa.o
 release/Mesero.o
 release/Peticion.o
@@ -17,6 +18,7 @@ release/Pila.o
 release/Random.o
 release/Restaurante.o
 release/TablaPlatos.o
+release/ThreadEntradaRestaurante.o
 release/Utilidades.o
 release/main.o
 release/mainwindow.o

@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    restaurante->threadRestaurante.__init__(restaurante->entrada,ui->ListLogRestaurante);
+    qDebug()<<"Creado";
 }
 
 MainWindow::~MainWindow()
@@ -13,3 +15,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::on_pushButton_clicked()
+{
+    qDebug()<<"comienzo de simulacion";
+    restaurante->threadRestaurante.start();
+}

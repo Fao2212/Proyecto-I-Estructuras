@@ -2,6 +2,7 @@
 #include "Estado.h"
 #include "Peticion.h"
 #include "GrupoDeClientesBORRADOR.h"
+#include "QDebug"
 
 Mesa :: Mesa(int consecutivo){
 
@@ -20,6 +21,8 @@ void Mesa :: setGrupo(GrupoDeClientes * grupo){
 }
 
 bool Mesa :: estaVacia(){
+    //qDebug()<<"toy ok";
+   // qDebug()<<this;
     return this->grupo == nullptr;
 }
 

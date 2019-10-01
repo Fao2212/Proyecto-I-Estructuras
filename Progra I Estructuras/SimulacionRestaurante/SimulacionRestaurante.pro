@@ -36,6 +36,7 @@ SOURCES += \
     Random.cpp \
     Restaurante.cpp \
     TablaPlatos.cpp \
+    ThreadEntradaRestaurante.cpp \
     Utilidades.cpp \
     main.cpp \
     mainwindow.cpp
@@ -94,6 +95,7 @@ HEADERS += \
     Restaurante.h \
     Structs.h \
     TablaPlatos.h \
+    ThreadEntradaRestaurante.h \
     ThreadMesero.h \
     Utilidades.h \
     mainwindow.h

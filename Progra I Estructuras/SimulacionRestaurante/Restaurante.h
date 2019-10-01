@@ -1,5 +1,6 @@
 #include "Structs.h"
 #include "qstring.h"
+#include "ThreadEntradaRestaurante.h"
 // Compuesta de estaciones, matriz de mesas , Lista de meseros ,Hilos para cada uno(Thread mesero,Thread cocinero...)
 //Todo lo que esta en verde se puede cambiar en ejecucion / La entrada de clientes es un rango configurable entiempo de ejecucion
 //Una ventana donde le pregunta si esta seguro de guardar los cambios APLY una
@@ -35,6 +36,8 @@ public:
     Caja * caja;
     Menu * menu;
     Mesa * mesas[20] = {nullptr};
+    ThreadEntradaRestaurante threadRestaurante;
+
 	//Hilos
 
     Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nombre,int tiempoDeGeneracionMinimo
