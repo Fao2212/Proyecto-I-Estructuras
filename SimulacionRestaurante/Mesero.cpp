@@ -10,11 +10,16 @@
 #include "CocinaPostres.h"
 #include "Lavadero.h"
 #include "Caja.h"
-#include "Peticion.h"
 
-Mesero :: Mesero(int mesas,Mesa array [],CocinaPrincipal cocinaPrincipal,CocinaEnsaladas cocinaEntrada,CocinaPostres cocinaPostres
-                 ,int tiempoDeServido,int tiempoDeEntrega){
 
+Mesero :: Mesero(CocinaPrincipal * cocinaPrincipal,CocinaEnsaladas * cocinaEntrada,CocinaPostres * cocinaPostres
+                 ,int tiempoDeServido){
+
+    this->tiempoDeServido = tiempoDeServido;
+    this->cocinaEntrada = cocinaEntrada;
+    this->cocinaPostres = cocinaPostres;
+    this->cocinaPrincipal = cocinaPrincipal;
+    this->peticiones = new Cola<Peticion>();
 
 }
 
@@ -32,23 +37,23 @@ void Mesero :: recogerOrden(Peticion * peticion){
 }
 
 void Mesero :: llevarLavar(){
-    lavadero->peticiones->encolar(peticiones->desencolar());
+    lavadero->peticiones->encolar(peticiones->desencolar()->dato);
 }
 
 void Mesero :: entregarCuenta(){
-    caja->peticiones->encolar(peticiones->desencolar());
+    caja->peticiones->encolar(peticiones->desencolar()->dato);
 }
 
 void Mesero :: llevarPeticion(Fase fase){
     switch(fase){
     case COCINAENTRADA:
-        cocinaEntrada->peticiones->encolar(peticiones->desencolar());
+        cocinaEntrada->peticiones->encolar(peticiones->desencolar()->dato);
         break;
     case COCINAPRINCIPAL:
-        cocinaPrincipal->peticiones->encolar(peticiones->desencolar());
+        cocinaPrincipal->peticiones->encolar(peticiones->desencolar()->dato);
         break;
     case COCINAPOSTRE:
-        cocinaPostres->peticiones->encolar(peticiones->desencolar());
+        cocinaPostres->peticiones->encolar(peticiones->desencolar()->dato);
         break;
     default:
         break;//Exeption
@@ -107,29 +112,36 @@ void Mesero :: atenderMesa(){//Recorrer lista y ver si estan comiendo sino tomar
 void Mesero :: checkCocinas(){
 
     if(cocinaEntrada->salida->siguienteEnCola() != nullptr)
-        recogerOrden(cocinaEntrada->salida->desencolar());
+        recogerOrden(cocinaEntrada->salida->desencolar()->dato);
     else if (cocinaPostres->salida->siguienteEnCola() != nullptr)
-        recogerOrden(cocinaPrincipal->salida->desencolar());
+        recogerOrden(cocinaPrincipal->salida->desencolar()->dato);
     else if (cocinaPrincipal->salida->siguienteEnCola() != nullptr)
-        recogerOrden(cocinaPostres->salida->desencolar());
+        recogerOrden(cocinaPostres->salida->desencolar()->dato);
 }
 
 void Mesero :: tomarOrden(Mesa * mesa){
+    qDebug()<<mesa;
     mesa->grupo->generarOrden();
     peticiones->encolar(mesa->grupo->peticion);
     mesa->grupo->setTodosEsperando(false);
 }
 
 void Mesero :: siguientePeticion(){
-   Peticion * peticion = peticiones->siguienteEnCola();
+   if(peticiones->siguienteEnCola() != nullptr){
+   Peticion * peticion = peticiones->siguienteEnCola()->dato;
    if(peticion != nullptr){
        if(peticion->fase == CREADA)
          peticion->setFase(COCINAENTRADA);
        else
         atenderPeticion(peticion);
    }
+   }
 }
 
 void Mesero :: dejarOrden(){
-    peticiones->primerNodo->dato.mesa->grupo->peticion = peticiones->desencolar();
+    peticiones->primerNodo->dato->mesa->grupo->peticion = peticiones->desencolar()->dato;
+}
+
+void Mesero :: cobrarCuenta(){
+
 }

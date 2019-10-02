@@ -8,11 +8,14 @@
 #include "Cola.h"
 
 
-EntradaDelRestaurante::EntradaDelRestaurante(Estado * estado,int maximoDeGenerados,int tiempoDeGeneracion,Mesa * matriz[5][4],int cantidadDeMesas){
-    this->estado = estado;
+EntradaDelRestaurante::EntradaDelRestaurante(int maximoDeGenerados,int tiempoDeGeneracionMinimo,int tiempoDeGeneracionMaximo,
+                                             Mesa * matriz[5][4],int cantidadDeMesas){
+    this->estado = new Estado();
     this ->maximoDeGenerados = maximoDeGenerados;
-    this ->tiempoDeGeneracion = tiempoDeGeneracion;
+    this ->tiempoDeGeneracion = tiempoDeGeneracionMaximo;
+    this->tiempoDeGeneracionMinimo = tiempoDeGeneracionMinimo;
     this-> consecutivoDeClientes = 0;
+    this->consecutivoDeGrupos = 0;
     copiarMatriz(matriz);
     this->cantidadDeMesas = cantidadDeMesas;
     this->espera = new Cola<GrupoDeClientes>();
@@ -23,9 +26,9 @@ GrupoDeClientes * EntradaDelRestaurante::crearGrupo(){
     int generados = Random::Random1(1000,maximoDeGenerados);//Sustituir el 1000 por un seed nombre rest * mesas /meseros * fecha + time 0
     GrupoDeClientes * grupo = new GrupoDeClientes();
     for(int i = 0; i < generados ;i++){
-        this->consecutivoDeClientes += 1;
         grupo->grupo[i] = new Cliente(consecutivoDeClientes);
     }
+    this->consecutivoDeGrupos += 1;
     return grupo;
 
 }
@@ -33,6 +36,7 @@ GrupoDeClientes * EntradaDelRestaurante::crearGrupo(){
 void EntradaDelRestaurante :: asignarGrupo(GrupoDeClientes *grupo){
 
     Mesa * mesa = seleccionMesa();
+    qDebug()<<mesa;
     if(mesa != nullptr)
         mesa->llenarMesa(grupo);
     else
@@ -41,7 +45,8 @@ void EntradaDelRestaurante :: asignarGrupo(GrupoDeClientes *grupo){
 }
 
 Mesa * EntradaDelRestaurante ::seleccionMesa(){
-     Random::Shuffle(mesas,1000,cantidadDeMesas);
+
+     Random::Shuffle(this->mesas,this->cantidadDeMesas);
      for(int i = 0;i < cantidadDeMesas;i++){
          if(mesas[i]->estaVacia())
              return mesas[i];
@@ -58,10 +63,13 @@ Mesa * EntradaDelRestaurante ::seleccionMesa(){
 
 
 void EntradaDelRestaurante :: copiarMatriz(Mesa * matriz[5][4]){
+    int k = 0;
     for(int i = 0;i<5;i++){
         for(int j = 0;j<4;j++){
-            if(matriz[i][j]!=nullptr)
-                this->mesas[i] = matriz[i][j];
+            if(matriz[i][j]!=nullptr){
+                this->mesas[k] = matriz[i][j];
+                k++;
+            }
         }
     }
 }
@@ -69,5 +77,5 @@ void EntradaDelRestaurante :: copiarMatriz(Mesa * matriz[5][4]){
 void EntradaDelRestaurante :: mesaLiberada(){
    Mesa * mesa = seleccionMesa();
    if(mesa != nullptr)
-       mesa->llenarMesa(espera->desencolar());
+       mesa->llenarMesa(espera->desencolar()->dato);
 }

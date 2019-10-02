@@ -7,6 +7,8 @@ struct Lavaplatos{
     Cola<Peticion> * peticiones;
 	int tiempo;
 	int atendidos;
+
+    Lavaplatos();
 	
     bool estaLavando();
     void tomarPlato();

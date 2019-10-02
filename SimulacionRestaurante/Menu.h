@@ -1,4 +1,4 @@
-//Implementar tarea
-struct Menu{
+#include "Structs.h"
+//Se crea una lista simple con el nombre Menu y se cargar aca todos los platos
 
-};
+

@@ -6,12 +6,53 @@ struct Cola {
     public:
     Nodo<T> * primerNodo;
 	
-    Cola();
-    bool estaVacia();
-    void encolar(T * dato);
-    T * desencolar();//se aplica el ejemplo de objetos donde se pasa deuna cola a otra
-    T * siguienteEnCola();
+    Cola(){
+        primerNodo = nullptr;
+    }
+
+    bool estaVacia(){
+        return primerNodo == nullptr;
+    }
+
+    void encolar(T * dato){
+        Nodo<T> * nuevo = new Nodo<T>(dato);
+        if (estaVacia())
+
+            primerNodo = nuevo;
+
+        else{
+
+            Nodo<T> * temp = primerNodo;
+            while (temp -> siguiente != nullptr){
+                temp = temp -> siguiente;
+
+            }
+
+            temp -> siguiente = nuevo;
+        }
+    }
+
+    Nodo<T> * desencolar(){
+        Nodo<T> * borrado = primerNodo;
+
+        if ((! estaVacia() && primerNodo -> siguiente == nullptr) || estaVacia())
+            primerNodo = nullptr;
+
+        else{
+
+            primerNodo -> siguiente = nullptr;
+            primerNodo = borrado -> siguiente;
+            return borrado;
+
+        }
+
+        return borrado;
+    }
+
+    Nodo<T> * siguienteEnCola(){
+        return primerNodo;
+    }
+
+//un insertar al inicio para la prioridad
 };
 
-extern template struct Cola<Peticion>;
-extern template struct Cola<GrupoDeClientes>;

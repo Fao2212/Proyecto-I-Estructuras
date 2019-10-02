@@ -6,5 +6,7 @@ struct CocinaPrincipal{
     Cola<Peticion> * peticiones;
 	Estado * estado;
     Cola<Peticion> * salida;
+
+    CocinaPrincipal();
 	
 };

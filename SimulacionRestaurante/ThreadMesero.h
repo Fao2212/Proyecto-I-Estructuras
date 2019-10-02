@@ -2,17 +2,21 @@
 #define THREADMESERO_H
 
 #include <QtCore>
-#include "Mesero.h"
+#include "Structs.h"
+#include "qlistwidget.h"
 
 class ThreadMesero : public QThread{
 public:
     Mesero * mesero;
     bool pausa, activo;
+    QListWidget * log;
+    QMutex * mutexEntrada;
 
     ThreadMesero();
 
     void run();
 
+    void __init__(Mesero * mesero,QMutex * mutexEntrada);
     void pausar();
     void continuar();
 };

@@ -2,6 +2,7 @@
 #include "Estado.h"
 #include "Peticion.h"
 #include "GrupoDeClientesBORRADOR.h"
+#include "QDebug"
 
 Mesa :: Mesa(int consecutivo){
 
@@ -20,6 +21,7 @@ void Mesa :: setGrupo(GrupoDeClientes * grupo){
 }
 
 bool Mesa :: estaVacia(){
+
     return this->grupo == nullptr;
 }
 
@@ -40,8 +42,11 @@ Cuenta * Mesa :: pagarCuenta(){
 }
 
 bool Mesa :: necesitaMesero(){
-    if(grupo->listoParaOrdenar() == true)
-        return  true;
-    else
-        return false;
+    if(!estaVacia()){
+        if(grupo->listoParaOrdenar() == true)
+            return  true;
+        else
+            return false;
+    }
+    return false;
 }

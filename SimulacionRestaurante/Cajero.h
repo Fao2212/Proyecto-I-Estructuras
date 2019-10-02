@@ -3,7 +3,7 @@
 struct Cajero{
 public:
 	Estado * estado;
-	Cola * peticiones;
+    Cola<Peticion> * peticiones;
 	int tiempo;
 	int atendidos;
 	

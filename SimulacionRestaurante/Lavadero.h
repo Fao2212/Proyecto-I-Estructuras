@@ -3,8 +3,10 @@
 
 struct Lavadero{
 	
-	Cocinero * cocinero;
+    Lavaplatos * lavaplatos;
     Cola<Peticion> * peticiones;
 	Estado * estado;
+
+    Lavadero();
 	
 };

@@ -7,11 +7,12 @@ struct EntradaDelRestaurante{
 
 public:
     Cola<GrupoDeClientes> * espera;
-    double tiempoDeGeneracion;
-    double tiempoDeGeneracionMinimo;
+    int tiempoDeGeneracion;
+    int tiempoDeGeneracionMinimo;
     int maximoDeGenerados,minimoDeGenerados;
     Estado * estado;
     int consecutivoDeClientes;
+    int consecutivoDeGrupos;
     Mesa * mesas[20];
     int cantidadDeMesas;
 

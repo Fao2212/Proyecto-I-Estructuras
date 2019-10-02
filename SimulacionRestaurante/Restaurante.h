@@ -1,5 +1,9 @@
 #include "Structs.h"
 #include "qstring.h"
+#include "ThreadEntradaRestaurante.h"
+#include "QMutex"
+#include "ThreadMesero.h"
+#include "qlistwidget.h"
 // Compuesta de estaciones, matriz de mesas , Lista de meseros ,Hilos para cada uno(Thread mesero,Thread cocinero...)
 //Todo lo que esta en verde se puede cambiar en ejecucion / La entrada de clientes es un rango configurable entiempo de ejecucion
 //Una ventana donde le pregunta si esta seguro de guardar los cambios APLY una
@@ -21,8 +25,10 @@ public:
     int tiempoMinimoEntrada,tiempoMaximoEntrada,probabildadEntrada
         ,tiempoMinimoPrincipal,tiempoMaximoPrincipal,probabilidadPrincipal
         ,tiempoMinimoPostre,tiempoMaximoPostre,probabilidadPostre;
+    int tiempoServicioMesero;
     EntradaDelRestaurante * entrada;
     ListaSimple<Mesero> * meseros;
+    ListaSimple<ThreadMesero> * threadsMeseros;
     Mesa * matriz[5][4] = {{nullptr}};
     int consecutivoDeMesa;
     QString nombre;
@@ -33,41 +39,35 @@ public:
     Lavadero * lavadero;
     Caja * caja;
     Menu * menu;
+    Mesa * mesas[20] = {nullptr};
+    ThreadEntradaRestaurante threadRestaurante;
+    QMutex mutexEntrada;
+
 	//Hilos
 
-    Restaurante(EntradaDelRestaurante entrada);
+    Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nombre,int tiempoDeGeneracionMinimo
+                ,int tiempoDeGeneracionMaximo,int tiempoMinimoEntrada, int tiempoMaximoEntrada,int probabildadEntrada
+                ,int tiempoMinimoPrincipal,int tiempoMaximoPrincipal, int probabilidadPrincipal
+                ,int tiempoMinimoPostre,int tiempoMaximoPostre,int probabilidadPostre);
     Restaurante();
 
-    void cambiarTiempoMesero();
-    void cambiarTiempoCocinero();
-    void cambiarTiempoLavadero();
-    void cambiarTiempoCajero();
+    void cambiarTiempoMesero(Mesero * mesero,int tiempo);
+    void cambiarTiempoCocinero(Cocinero * cocinero,int tiempo);
+    void cambiarTiempoLavaplatos(Lavaplatos * lavaplatos,int tiempo);
+    void cambiarTiempoCajero(Cajero * Cajero,int tiempo);
     void cambiarModoCaja();
-    void cambiarTiempoPreparacionPlato();
-    void cambiarProbabilidadPlato();
-    void cambiarTiempoMinimoDeConsumoPlato();
-    void cambiarTiempoMaximoDeConsumoPlato();
-    void cambiarCantidadDeMeseros();
+    void cambiarTiempoLavadoPlato(Plato *plato, int tiempo);
+    void cambiarTiempoPreparacionPlato(Plato *plato, int tiempo);
     void cambiarEstado();//De quien quiero cambiar el estado
     void setEntrada(int tiempoDeGeneracion,Estado * estado,int maximoDeGenerados);
-    void setMatrizMesas();
     void setMeseros();
     void setMesasMeseros();
-    void setCocinaPrincipal();
-    void setCocinaEnsaladas();
-    void setCocinaPostres();
-    void setLavadero();
-    void setMesero();
-    void setCliente();
-    void setCocinero();
-    void setMenu();
-    void setTablaPlato();
-    void setCaja();
-    void setCajero();
-    void initRestaurante();//Seguir un orden logico para crear el restaurante
-    void setNumeroDeMesas();
     void crearMatriz();
     int * getDisponible();
+    void copiarMatriz(Mesa * matriz[5][4]);
+    void cambiarTiempoGeneracion(int min, int max);
+    void iniciarThreadMeseros(QListWidget * log);
+
 	
     //Aadir configuracion por defecto
 };

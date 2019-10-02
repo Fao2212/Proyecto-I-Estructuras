@@ -1,21 +1,22 @@
 #include "Structs.h"
 struct Mesero{
 	
+    int id;
     Cola<Peticion> * peticiones;
 	Estado * estado;
     Cola<Cuenta> * cuentas;//Puede que no se necesite una lista de cuentas
 	int tiempoDeServido;
-	int tiempoDeEntrega;
     int mesasAtendidas;//Cuando se termine de comer se agrega 1
     Mesa * mesasAsignadas[20] = {nullptr};
+    int numeroMesasAsignadas;
     CocinaPrincipal * cocinaPrincipal;
     CocinaEnsaladas * cocinaEntrada;
     CocinaPostres * cocinaPostres;//Se asignan las cocinas del restauran en los constructores
     Caja * caja;
     Lavadero * lavadero;
 
-    Mesero(int mesas,Mesa array [],CocinaPrincipal cocinaPrincipal,CocinaEnsaladas cocinaEntrada,CocinaPostres cocinaPostres
-           ,int tiempoDeServido,int tiempoDeEntrega);
+    Mesero(CocinaPrincipal * cocinaPrincipal,CocinaEnsaladas *cocinaEntrada,CocinaPostres *cocinaPostres
+           ,int tiempoDeServido);
 	
     //Cambiar algunos nombres a unos mas representativos
     void setMesas();//Se toma el array que se le da y se reparte en su propio array
