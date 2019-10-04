@@ -1,45 +1,30 @@
 #include "ThreadMesero.h"
 #include "Mesero.h"
+#include "Mesa.h"
+#include "QDateTime"
+#include "Utilidades.h"
+#include "Peticion.h"
+#include "GUIMensaje.h"
 
 ThreadMesero :: ThreadMesero(){
 
 }
 
-void ThreadMesero :: __init__(Mesero *mesero,QMutex * mutexEntrada){//Widgets y mutex
+void ThreadMesero :: __init__(Mesero *mesero,QMutex * mutexEntrada,ColaMensajes * mensajes){//Widgets y mutex
     this->pausa = false;
     this->activo = true;
     this->mesero = mesero;
     this->mutexEntrada = mutexEntrada;
+    this->mensajes = mensajes;
 
 }
 
 void ThreadMesero :: run(){
     while(activo){
-
-        if(mutexEntrada->tryLock()){
-        mesero->atenderMesa();
-        sleep(unsigned(mesero->tiempoDeServido));
-        //Mesa atendida por mesero id, orden generada por el grupo,
-        log->addItem("Mesa atendida");
-        mutexEntrada->unlock();
-        }
-        if(mutexEntrada->tryLock()){
-        mesero->siguientePeticion();
-        sleep(unsigned(mesero->tiempoDeServido));
-        mutexEntrada->unlock();
-        }
-        //Peticion revisada en camino a--->
-        if(mutexEntrada->tryLock()){
-        log->addItem("Peticion Atendida");
-        mesero->checkCocinas();
-        mutexEntrada->unlock();
-        }
-        sleep(unsigned(mesero->tiempoDeServido));
-        if(mutexEntrada->tryLock()){
-        log->addItem("Cocina revisada Atendida");
-        mutexEntrada->unlock();
-        }
-        //Se toma una peticion de la cocina tal.
+            msleep(100);
+            pudoAtender();
+            tomoPeticion();
+            llevoPeticion();
         while(pausa) {
             msleep(100);
         }
@@ -53,3 +38,34 @@ void ThreadMesero ::pausar(){
 void ThreadMesero ::continuar(){
     this->pausa = false;
 }
+
+void ThreadMesero :: pudoAtender(){
+    Mesa * mesa = mesero->atenderMesa();
+    //Set del estatus actual con esta mesa y con la peticion
+    if(mesa != nullptr){
+        sleep(unsigned(mesero->tiempoDeServido));//Multiplicar el tiempo de cada cliente
+        QString mensaje =": El mesero " + QString::number(mesero->id) + " atendio la mesa #"+ QString::number(mesa->numeroDeMesa);
+        mensajes->crearMensaje(COLORMESERO,mensaje);
+
+    }
+}
+
+void ThreadMesero :: tomoPeticion(){
+    Peticion * peticion = mesero->siguientePeticion();
+    if(peticion != nullptr){
+        sleep(unsigned(mesero->tiempoDeServido));
+        QString mensaje =": El mesero " + QString::number(mesero->id) + " tomo la peticion y "+ peticion->faseActual();
+        mensajes->crearMensaje(COLORMESERO,mensaje);
+    }
+
+}
+
+void ThreadMesero :: llevoPeticion(){
+    Peticion * peticion = mesero->checkCocinas();
+    if(peticion != nullptr){
+        sleep(unsigned(mesero->tiempoDeServido));
+        QString mensaje = Utilidades<void>::getTime() + ": El mesero " + QString::number(mesero->id) + " tomo la peticion y "+ peticion->faseActual();
+        mensajes->crearMensaje(COLORMESERO,mensaje);
+    }
+}
+//posibilidad de que ninguno pida nada

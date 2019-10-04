@@ -5,7 +5,7 @@ struct Mesa{
 	Estado * estado;
 	Cuenta * cuenta;
     ListaSimple<Mesa> * historial;
-    int TiempoDeComida;//1 para entrada 2 para plato principal 3 para postre
+    Tipo TiempoDeComida;
 	int numeroDeMesa;
     int asientosOcupados;
     bool vacia;

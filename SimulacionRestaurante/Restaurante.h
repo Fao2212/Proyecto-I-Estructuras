@@ -3,7 +3,9 @@
 #include "ThreadEntradaRestaurante.h"
 #include "QMutex"
 #include "ThreadMesero.h"
+#include "ThreadCocinero.h"
 #include "qlistwidget.h"
+#include "Globals.h"
 // Compuesta de estaciones, matriz de mesas , Lista de meseros ,Hilos para cada uno(Thread mesero,Thread cocinero...)
 //Todo lo que esta en verde se puede cambiar en ejecucion / La entrada de clientes es un rango configurable entiempo de ejecucion
 //Una ventana donde le pregunta si esta seguro de guardar los cambios APLY una
@@ -33,22 +35,25 @@ public:
     int consecutivoDeMesa;
     QString nombre;
     TablaPlatos * tabla;
-    CocinaEnsaladas * cocinaEntradas;
-    CocinaPrincipal * cocinaPrincipal;
-    CocinaPostres * cocinaPostres;
+    Cocina * cocinaEntradas;
+    Cocina * cocinaPrincipal;
+    Cocina * cocinaPostres;
     Lavadero * lavadero;
     Caja * caja;
     Menu * menu;
     Mesa * mesas[20] = {nullptr};
     ThreadEntradaRestaurante threadRestaurante;
+    ThreadCocinero * threadCocineros[5] = {nullptr};
     QMutex mutexEntrada;
+    Cocinero * cocineros[5];
+    ColaMensajes * mensajes;
 
 	//Hilos
 
     Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nombre,int tiempoDeGeneracionMinimo
                 ,int tiempoDeGeneracionMaximo,int tiempoMinimoEntrada, int tiempoMaximoEntrada,int probabildadEntrada
                 ,int tiempoMinimoPrincipal,int tiempoMaximoPrincipal, int probabilidadPrincipal
-                ,int tiempoMinimoPostre,int tiempoMaximoPostre,int probabilidadPostre);
+                ,int tiempoMinimoPostre,int tiempoMaximoPostre,int probabilidadPostre,int tiempoServicioMesero,ColaMensajes * mensajes);
     Restaurante();
 
     void cambiarTiempoMesero(Mesero * mesero,int tiempo);
@@ -67,6 +72,8 @@ public:
     void copiarMatriz(Mesa * matriz[5][4]);
     void cambiarTiempoGeneracion(int min, int max);
     void iniciarThreadMeseros(QListWidget * log);
+    void iniciarThreadCocineros(QListWidget * log);
+    void cargarMenu();
 
 	
     //Aadir configuracion por defecto

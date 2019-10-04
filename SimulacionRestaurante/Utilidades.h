@@ -1,6 +1,9 @@
 #ifndef CONSECUTIVO_H
 #define CONSECUTIVO_H
 #include "Structs.h"
+#include "QString"
+#include "QDateTime"
+
 //Consnecutivos Conversion de datos To string
 
 template <typename T>
@@ -16,6 +19,10 @@ static int arraySize(T array[]){
             cont += 1;
     }
     return cont;
+}
+
+static QString getTime(){
+    return QTime::currentTime().toString();
 }
 
 };

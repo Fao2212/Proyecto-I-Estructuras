@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "QDebug"
 #include <QApplication>
-#include "Mesa.h"
+#include "Globals.h"
+#include "Menu.h"
+#include "TablaPlatos.h"
 
 int main(int argc, char *argv[])
 {

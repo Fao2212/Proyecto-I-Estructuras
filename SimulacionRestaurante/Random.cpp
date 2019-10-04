@@ -36,24 +36,5 @@ void Random :: Shuffle(Mesa * array[20],int nonulos){
     }
     }
 
-/*
-int main(int argc, char *argv[])
-{
-    for(int i = 0;i<2000;i++){
-        qDebug()<<Random::RandomRange(0,20);
-    }
 
-    Mesa * array[20];
-    for(int i = 0;i<20;i++){
-        array[i] = new Mesa(i);
-    }
-    for(int i = 0;i<1000;i++){
-        qDebug()<<i;
-    Random::Shuffle(array,20);
-    for(int i = 0;i<20;i++){
-    qDebug()<<array[i]->numeroDeMesa;
-    }
-    }
-    return 0;
-}
-*/
+

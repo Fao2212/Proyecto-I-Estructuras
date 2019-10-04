@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "Restaurante.h"
+#include "GUIMensaje.h"
+#include "ThreadMensaje.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,7 +16,10 @@ class MainWindow : public QMainWindow
 
 public:
 
-    Restaurante * restaurante = new Restaurante(20,5,"Rostipollos",2,5,10,20,10,20,10,20,10,20,10);
+    ColaMensajes * mensajes = new ColaMensajes();
+    ThreadMensaje * threadMensaje = new ThreadMensaje();
+    Restaurante * restaurante = new Restaurante(17,8,"Rostipollos",10,20,10,20,10,
+                                                20,10,20,10,20,10,5,mensajes);
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

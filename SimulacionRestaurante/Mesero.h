@@ -9,19 +9,19 @@ struct Mesero{
     int mesasAtendidas;//Cuando se termine de comer se agrega 1
     Mesa * mesasAsignadas[20] = {nullptr};
     int numeroMesasAsignadas;
-    CocinaPrincipal * cocinaPrincipal;
-    CocinaEnsaladas * cocinaEntrada;
-    CocinaPostres * cocinaPostres;//Se asignan las cocinas del restauran en los constructores
+    Cocina * cocinaPrincipal;
+    Cocina * cocinaEntrada;
+    Cocina * cocinaPostres;//Se asignan las cocinas del restauran en los constructores
     Caja * caja;
     Lavadero * lavadero;
 
-    Mesero(CocinaPrincipal * cocinaPrincipal,CocinaEnsaladas *cocinaEntrada,CocinaPostres *cocinaPostres
+    Mesero(Cocina * cocinaPrincipal,Cocina *cocinaEntrada,Cocina *cocinaPostres
            ,int tiempoDeServido);
 	
     //Cambiar algunos nombres a unos mas representativos
     void setMesas();//Se toma el array que se le da y se reparte en su propio array
     void atenderPeticion(Peticion * peticion);//Realiza la fase de la peticion
-    void atenderMesa();
+    Mesa * atenderMesa();
     void tomarOrden(Mesa * mesa);//Toma la orden del cliente
     void llevarPeticion(Fase fase);//Lleva la orden a su respectiva cocina
     void dejarOrden();//Saca la peticion de la cola y la deja en una nueva
@@ -29,9 +29,9 @@ struct Mesero{
     void entregarCuenta();//Lleva la cuenta a la caja
     void llevarLavar();//Lleva los platos al lavadero
     void repartirPlatos();//Da el plato correspondiente a cada miembro de la mesa
-    void siguientePeticion();
+    Peticion * siguientePeticion();
     void cobrarCuenta();
-    void checkCocinas();//Revision de cocinas individual
+    Peticion * checkCocinas();//Revision de cocinas individual
     bool validarMesa(Peticion * peticion);
 
 };//Agregar un label / Una pantalla que diga que esta haciendo cada mesero, Tipo juego donde diga !Mesro Regogio la comida!!

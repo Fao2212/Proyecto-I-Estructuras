@@ -1,4 +1,5 @@
 #include "Structs.h"
+#include "QString"
 
 struct Cocinero{
 	
@@ -6,12 +7,18 @@ struct Cocinero{
     Cola<Peticion> * peticiones;
 	int tiempo;
 	int atendidos;
+    int id;
+    Cocina * cocina;
 
-    Cocinero();
+    Cocinero(Cocina * cocina);
 	
     bool estaCocinando();
-    void tomarOrden();
-    void entregarOrden();
-    void cocinarPlato();
+    Peticion * tomarOrden();
+    Peticion * entregarOrden();
+    QString cocinandoPlato(int i);
+    int tiempoDeCoccion(int i);
+
+    void recogerOrden(Peticion * peticion);
+    void dejarOrden();
 	
 };

@@ -9,12 +9,15 @@ struct Peticion {
 	Mesa * mesa;
     int grupo;
     Plato * platos[6] = {nullptr};
+    QString responsable;
 
 
     Peticion(Mesa * mesa,int grupo);
     void vaciarPlatos();
     void llenarPlatos(Plato plato);
     void setFase(Fase state);
+    QString platosActuales();
+    QString faseActual();
 	
 };
 

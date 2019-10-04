@@ -5,14 +5,12 @@
 #include "Utilidades.h"
 #include "GrupoDeClientesBORRADOR.h"
 #include "Cola.h"
-#include "CocinaEnsaladas.h"
-#include "CocinaPrincipal.h"
-#include "CocinaPostres.h"
+#include "Cocina.h"
 #include "Lavadero.h"
 #include "Caja.h"
 
 
-Mesero :: Mesero(CocinaPrincipal * cocinaPrincipal,CocinaEnsaladas * cocinaEntrada,CocinaPostres * cocinaPostres
+Mesero :: Mesero(Cocina * cocinaPrincipal,Cocina * cocinaEntrada,Cocina * cocinaPostres
                  ,int tiempoDeServido){
 
     this->tiempoDeServido = tiempoDeServido;
@@ -33,6 +31,19 @@ bool Mesero :: validarMesa(Peticion * peticion){
 }
 
 void Mesero :: recogerOrden(Peticion * peticion){
+    switch (peticiones->siguienteEnCola()->dato->fase) {
+        case ENTRADATERMINADA:
+        peticiones->siguienteEnCola()->dato->setFase(ENTREGAENTRADA);
+        break;
+    case PRINCIPALTERMINADA:
+        peticiones->siguienteEnCola()->dato->setFase(ENTREGAPRINCIPAL);
+        break;
+    case POSTRETERMINADO:
+        peticiones->siguienteEnCola()->dato->setFase(ENTREGAPOSTRE);
+        break;
+    default:
+        break;
+    }
     peticiones->encolar(peticion);
 }
 
@@ -101,47 +112,66 @@ void Mesero :: atenderPeticion(Peticion * peticion){
     }
 }
 //Cuando toma la orden set esperando en false y cuando entrega la orden set esperando en true y comiendo en true
-void Mesero :: atenderMesa(){//Recorrer lista y ver si estan comiendo sino tomar orden
+Mesa * Mesero :: atenderMesa(){//Recorrer lista y ver si estan comiendo sino tomar orden
     for(int i = 0;i < Utilidades<Mesa*>::arraySize(mesasAsignadas) ;i++){
         if(mesasAsignadas[i]->necesitaMesero()){
             tomarOrden(mesasAsignadas[i]);//esperar tiempo mesero * #clientes
+            return mesasAsignadas[i];
         }
     }
+    return nullptr;
 }
 
-void Mesero :: checkCocinas(){
+Peticion * Mesero :: checkCocinas(){
 
-    if(cocinaEntrada->salida->siguienteEnCola() != nullptr)
-        recogerOrden(cocinaEntrada->salida->desencolar()->dato);
-    else if (cocinaPostres->salida->siguienteEnCola() != nullptr)
-        recogerOrden(cocinaPrincipal->salida->desencolar()->dato);
-    else if (cocinaPrincipal->salida->siguienteEnCola() != nullptr)
-        recogerOrden(cocinaPostres->salida->desencolar()->dato);
+    if(cocinaEntrada->salida->siguienteEnCola() != nullptr){
+        Peticion * peticion = cocinaEntrada->salida->desencolar()->dato;
+        recogerOrden(peticion);
+        return peticion;
+    }
+    else if (cocinaPostres->salida->siguienteEnCola() != nullptr){
+        Peticion * peticion = cocinaPrincipal->salida->desencolar()->dato;
+        recogerOrden(peticion);
+        return peticion;
+    }
+    else if (cocinaPrincipal->salida->siguienteEnCola() != nullptr){
+        Peticion * peticion = cocinaPostres->salida->desencolar()->dato;
+        recogerOrden(peticion);
+        return peticion;
+    }
+    return nullptr;
 }
 
 void Mesero :: tomarOrden(Mesa * mesa){
-    qDebug()<<mesa;
     mesa->grupo->generarOrden();
     peticiones->encolar(mesa->grupo->peticion);
     mesa->grupo->setTodosEsperando(false);
 }
 
-void Mesero :: siguientePeticion(){
+Peticion * Mesero :: siguientePeticion(){
    if(peticiones->siguienteEnCola() != nullptr){
-   Peticion * peticion = peticiones->siguienteEnCola()->dato;
-   if(peticion != nullptr){
-       if(peticion->fase == CREADA)
-         peticion->setFase(COCINAENTRADA);
-       else
-        atenderPeticion(peticion);
+       Peticion * peticion = peticiones->siguienteEnCola()->dato;
+       if(peticion != nullptr){
+           if(peticion->fase == CREADA){
+             peticion->setFase(COCINAENTRADA);
+             atenderPeticion(peticion);
+           }
+           else
+            atenderPeticion(peticion);
+           return peticion;
+       }
    }
-   }
+   return nullptr;
 }
 
 void Mesero :: dejarOrden(){
     peticiones->primerNodo->dato->mesa->grupo->peticion = peticiones->desencolar()->dato;
+    peticiones->primerNodo->dato->mesa->grupo->setTodosComiendo(true);
 }
 
 void Mesero :: cobrarCuenta(){
-
+    peticiones->primerNodo->dato->mesa->grupo->setTodosComiendo(false);
+    peticiones->primerNodo->dato->mesa->grupo->setTodosComiendo(false);
 }
+
+

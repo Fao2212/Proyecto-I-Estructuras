@@ -1,4 +1,5 @@
 #include "TablaPlatos.h"
+#include "Random.h"
 
 Tabla :: Tabla(Tipo tipo,int tiempoMinimo,int tiempoMaximo,int probabilidad){
     this->tipo = tipo;
@@ -26,4 +27,16 @@ TablaPlatos :: TablaPlatos(int tiempoMinimoEntrada,int tiempoMaximoEntrada,int p
     this->plato = new Tabla(PLATO,tiempoMinimoPlato,tiempoMaximoPlato,probabilidadPlato);
     this->postre = new Tabla(POSTRE,tiempoMinimoPostre,tiempoMaximoPostre,probabilidadPostre);
 
+}
+
+int TablaPlatos :: darTiempo(Tipo tipo){
+
+    switch (tipo) {
+        case ENTRADA:
+            return Random::RandomRange(entrada->tiempoMinimo,entrada->tiempoMaximo);
+        case PLATO:
+            return Random::RandomRange(plato->tiempoMinimo,plato->tiempoMaximo);
+        case POSTRE:
+            return Random::RandomRange(postre->tiempoMinimo,postre->tiempoMaximo);
+        }
 }

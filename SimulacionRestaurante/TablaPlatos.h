@@ -23,7 +23,8 @@ struct TablaPlatos{
     TablaPlatos(int tiempoMinimoEntrada,int tiempoMaximoEntrada,int probabilidadEntrada,
                 int tiempoMinimoPlato,int tiempoMaximoPlato,int probabilidadPlato,
                 int tiempoMinimoPostre,int tiempoMaximoPostre,int probabilidadPostre);
-    //Conoce();
+
+    int darTiempo(Tipo tipo);
    // Conoce();
    // Conoce();
 

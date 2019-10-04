@@ -1,5 +1,6 @@
 #include "GrupoDeClientesBORRADOR.h"
 #include "Peticion.h"
+#include "Mesa.h"
 #include "Cliente.h"
 
 GrupoDeClientes::GrupoDeClientes(){
@@ -27,7 +28,7 @@ int GrupoDeClientes:: generarReserva(){
     return 1;
 }
 
-void GrupoDeClientes :: sentarEnMesa(Mesa * mesa){// Cuando se les asigne una mesa
+void GrupoDeClientes :: sentarEnMesa(Mesa * mesa){
     this->mesa = mesa;
     this->peticion = new Peticion(mesa,this->numeroDeGrupo);
 }
@@ -60,4 +61,24 @@ void GrupoDeClientes :: setTodosComiendo(bool comiendo){
     for(int i =0;i<groupSize();i++){
         grupo[i]->setComiendo(comiendo);
     }
+}
+
+void GrupoDeClientes :: pagarCuenta(){
+    mesa->vaciarMesa();
+}
+
+bool GrupoDeClientes :: listoParaPagar(){
+    for(int i = 0;i < groupSize();i++){
+        if(grupo[i]->quierePagar() == false)
+            return false;
+    }
+    return true;
+}
+
+bool GrupoDeClientes :: listoParaComer(){
+    for(int i = 0;i < groupSize();i++){
+        if(grupo[i]->estaComiendo() == false)
+            return false;
+    }
+    return true;
 }

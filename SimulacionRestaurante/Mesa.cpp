@@ -10,7 +10,7 @@ Mesa :: Mesa(int consecutivo){
     this->estado = new Estado();
     this->cuenta = nullptr;
     this->historial = nullptr;
-    this->TiempoDeComida = 1;//Siempre empieza con la entrada
+    this->TiempoDeComida = ENTRADA;
     this->numeroDeMesa = consecutivo;
     this->asientosOcupados = 0;
 

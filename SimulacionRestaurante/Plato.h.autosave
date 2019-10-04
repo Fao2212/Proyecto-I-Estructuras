@@ -1,0 +1,15 @@
+#include "qstring.h"
+#include "Structs.h"
+
+struct Plato{
+    
+    Tipo tipo;
+	int tiempoDePreparacion;
+    QString nombre;
+	int tiempoDeLavado;
+	double precio;
+    ListaSimple<QString> * ingredientes;
+    
+    Plato(QString nombre,Tipo tipo,int tiempoDePreparacion,int tiempoDeLavado,double precio,ListaSimple<QString> * ingredientes);
+	
+};

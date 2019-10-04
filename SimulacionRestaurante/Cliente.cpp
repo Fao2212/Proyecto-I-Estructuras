@@ -2,11 +2,19 @@
 #include "Peticion.h"
 #include "TablaPlatos.h"
 #include "Random.h"
+#include "Globals.h"
+#include "Menu.h"
+Menu* menuglobal = menuglobal;
+TablaPlatos * tablaglobal = tablaglobal;
+//EL CLIENTE GUARDA EL PLATO QUE SELECCIONA Y ESPERA HASTA QUE LLEGA LA PETICION EN COMER
+//eL THREAD USA EL COMER CON EL PLATO ACTUAL Y LUEGO LO BORRA, LO PONE EN NULL PUEDE LLAMARSE PLATO ACTUAL
 
 Cliente :: Cliente(int pos){
     this->pos = pos;
     this->comiendo = false;
     this->esperando = true;
+    this->tabla = tablaglobal;
+    this->plato = nullptr;
 }
 
 Plato * Cliente :: tomarDecision(Peticion * peticion){
@@ -24,7 +32,7 @@ Plato * Cliente :: tomarDecision(Peticion * peticion){
                 return seleccionPlato(tabla->postre->tipo);
             break;
         default:
-            break;//excepcion
+            break;
     }
     return nullptr;
 }
@@ -32,28 +40,17 @@ Plato * Cliente :: tomarDecision(Peticion * peticion){
 Plato * Cliente :: seleccionPlato(Tipo tipo){
     switch (tipo) {
         case ENTRADA:
-            //MENU DE ENTRADA SELECCIONAR AL AZAR UNA ENTRADA
-            break;
+            return menuglobal->platoAlAzar(tipo);
         case PLATO:
-            break;
+            return menuglobal->platoAlAzar(tipo);
         case POSTRE:
-            break;
+            return menuglobal->platoAlAzar(tipo);
     }
     return nullptr;
 }
 
-void Cliente :: comer(Peticion * peticion){
-    switch (peticion->fase) {
-        case COMIENDOENTRADA:
-            break;
-        case COMIENDOPRINCIPAL:
-            break;
-        case COMIENDOPOSTRE:
-            break;
-        default:
-            break;
-
-    }
+bool Cliente :: estaComiendo(){
+    return comiendo == true && esperando == false;
 }
 
 void Cliente :: setComiendo(bool comiendo){
@@ -67,3 +64,8 @@ void Cliente :: setEsperando(bool esperando){
 bool Cliente :: listo(){
     return esperando == true && comiendo == false;
 }
+
+bool Cliente :: quierePagar(){
+    return comiendo == false && esperando == false;
+}
+

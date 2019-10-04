@@ -18,4 +18,8 @@ struct GrupoDeClientes{
     void setTodosEsperando(bool esperando);
     void setTodosComiendo(bool comiendo);
     void recibirPeticion();
+    bool listoParaPagar();
+    bool listoParaComer();
+    void pagarCuenta();
+
 };

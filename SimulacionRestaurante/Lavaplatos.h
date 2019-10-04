@@ -5,13 +5,13 @@ struct Lavaplatos{
 	
 	Estado * estado;
     Cola<Peticion> * peticiones;
-	int tiempo;
 	int atendidos;
+    Lavadero * lavadero;
 
-    Lavaplatos();
+    Lavaplatos(Lavadero * lavadero);
 	
     bool estaLavando();
-    void tomarPlato();
-    void lavarPlato();
+    Peticion * tomarPlato();
+    Peticion * lavarPlato();
 	
 };

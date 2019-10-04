@@ -8,5 +8,7 @@ struct Lavadero{
 	Estado * estado;
 
     Lavadero();
+
+    void desactivar();
 	
 };

@@ -4,11 +4,15 @@ struct Cajero{
 public:
 	Estado * estado;
     Cola<Peticion> * peticiones;
-	int tiempo;
 	int atendidos;
+    int tiempo;//Por definir
+    Caja * caja;
 	
+    Cajero(Caja * caja);
+
     bool estaCobrando();
-    void tomarCuenta();
-    void hacerCobro();
+    Peticion * tomarCuenta();
+    Peticion * hacerCobro();
+    double ventasActuales();
 	
 };

@@ -5,9 +5,6 @@ struct Bitacora;
 struct Caja;
 struct Cajero;
 struct Cliente;
-struct CocinaEnsaladas;
-struct CocinaPostres;
-struct CocinaPrincipal;
 struct Cocinero;
 template<typename T>
 struct Cola;
@@ -31,8 +28,13 @@ template<typename T>
 struct Pila;
 struct Plato;
 struct Random;
+struct Mensaje;
+struct ColaMensajes;
 struct Restaurante;
 struct TablaPlatos;
+template<typename T>
+struct ListaDoble;
+struct Cocina;
 enum Tipo{
     ENTRADA,PLATO,POSTRE
 };
@@ -45,6 +47,12 @@ enum Fase : int{
     ,LAVARPRINCIPAL,PEDIRPOSTRE,COCINAPOSTRE,COCINANDOPOSTRE
     ,POSTRETERMINADO,ENTREGAPOSTRE,COMIENDOPOSTRE,COBROCUENTA
     ,LAVARPOSTRE,CUENTAACAJA
+};
+enum TipoDeCocina{
+    ENSALADAS,PRINCIPAL,POSTRES
+};
+enum ColorTexto{
+    COLORMESERO,COLORENTRADA,COLORCOCINERO,COLORCAJERO,COLORLAVAPLATOS,COLORCLIENTE,COLORDEFAULT
 };
 
 

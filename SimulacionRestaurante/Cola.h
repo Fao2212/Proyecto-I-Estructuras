@@ -1,4 +1,5 @@
 #include "Nodo.h"
+#include "QDebug"
 #include "Structs.h"
 
 template<typename T>
@@ -40,8 +41,8 @@ struct Cola {
 
         else{
 
-            primerNodo -> siguiente = nullptr;
             primerNodo = borrado -> siguiente;
+            borrado -> siguiente = nullptr;
             return borrado;
 
         }
@@ -51,6 +52,13 @@ struct Cola {
 
     Nodo<T> * siguienteEnCola(){
         return primerNodo;
+    }
+
+    void encolarAlIncio(T * dato){
+        Nodo<T> * nuevo = new Nodo<T>(dato);
+        nuevo->siguiente = primerNodo;
+        primerNodo = nuevo;
+
     }
 
 //un insertar al inicio para la prioridad
