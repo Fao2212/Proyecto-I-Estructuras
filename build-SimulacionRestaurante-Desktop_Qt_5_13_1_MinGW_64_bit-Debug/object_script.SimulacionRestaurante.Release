@@ -1,4 +1,7 @@
+release/Caja.o
+release/Cajero.o
 release/Cliente.o
+release/Cocina.o
 release/CocinaEnsalada.o
 release/CocinaPostres.o
 release/CocinaPrincipal.o
@@ -8,9 +11,11 @@ release/EntradaRestaurante.o
 release/Estado.o
 release/Funciones.o
 release/GrupoDeClientes.o
+release/GuiMensaje.o
 release/LavaPlatos.o
 release/Lavadero.o
 release/ListaSimple.o
+release/Menu.o
 release/Mesa.o
 release/Mesero.o
 release/Peticion.o
@@ -18,9 +23,16 @@ release/Pila.o
 release/Random.o
 release/Restaurante.o
 release/TablaPlatos.o
+release/ThreadCajero.o
+release/ThreadClientes.o
+release/ThreadCocinero.o
 release/ThreadEntradaRestaurante.o
+release/ThreadLavaplatos.o
+release/ThreadMensaje.o
 release/ThreadMesero.o
 release/Utilidades.o
 release/main.o
 release/mainwindow.o
+release/qrc_icos.o
+release/qrc_icon.o
 release/moc_mainwindow.o
