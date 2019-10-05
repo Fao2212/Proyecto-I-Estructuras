@@ -38,12 +38,14 @@ SOURCES += \
     Mesero.cpp \
     Peticion.cpp \
     Pila.cpp \
+    Plato.cpp \
     Random.cpp \
     Restaurante.cpp \
     TablaPlatos.cpp \
     ThreadCajero.cpp \
     ThreadClientes.cpp \
     ThreadCocinero.cpp \
+    ThreadDatos.cpp \
     ThreadEntradaRestaurante.cpp \
     ThreadLavaplatos.cpp \
     ThreadMensaje.cpp \
@@ -114,6 +116,7 @@ HEADERS += \
     ThreadCajero.h \
     ThreadCliente.h \
     ThreadCocinero.h \
+    ThreadDatos.h \
     ThreadEntradaRestaurante.h \
     ThreadLavaplatos.h \
     ThreadMensaje.h \

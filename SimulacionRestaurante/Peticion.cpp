@@ -21,7 +21,7 @@ QString Peticion :: platosActuales(){
     for(int i = 0; i < 6;i++){
         if( platos[i] != nullptr){
             QString plato = this->platos[i]->nombre;
-            mensaje += plato + "\n";
+            mensaje += plato + ",";
         }
     }
     return mensaje;
@@ -101,6 +101,84 @@ QString Peticion :: faseActual(){
         break;
     case CUENTAACAJA:
         mensaje = "se dirige a la caja";
+        break;
+    }
+    return mensaje;
+}
+QString Peticion :: faseMensaje(){
+    QString mensaje = "";
+    switch (fase) {
+    case CREADA:
+        mensaje = "Creada";
+        break;
+    case PEDIRENTRADA:
+        mensaje = "Pedir Entrada";
+        break;
+    case COCINAENTRADA:
+        mensaje = "En cocina de entradas";
+        break;
+    case COCINANDOENTRADA:
+        mensaje = "Cocinando entrada";
+        break;
+    case ENTRADATERMINADA:
+        mensaje = "Entrada esperando a ser recogida";
+        break;
+    case ENTREGAENTRADA:
+        mensaje = "Entrada en camino a la mesa";
+        break;
+    case COMIENDOENTRADA:
+        mensaje = "Orden de entrada en mesa";
+        break;
+    case LAVADAENTRADA:
+        mensaje = "Se dirige al lavadero";
+        break;
+    case PEDIDAPRINCIPAL:
+        mensaje = "Se dirige a la cocina principal";
+        break;
+    case COCINAPRINCIPAL:
+        mensaje = "Esperando en cocina principal";
+        break;
+    case COCINANDOPRINCIPAL:
+        mensaje = "Se esta cocinando el plato principal";
+        break;
+    case PRINCIPALTERMINADA:
+        mensaje = "El plato de entrada esta listo!";
+        break;
+    case ENTREGAPRINCIPAL:
+        mensaje = "Se dirige a la mesa #"+QString::number(mesa->numeroDeMesa);
+        break;
+    case COMIENDOPRINCIPAL:
+        mensaje = "Plato principal en mesa";
+        break;
+    case LAVARPRINCIPAL:
+        mensaje = "Se dirige al lavadero";
+        break;
+    case PEDIRPOSTRE:
+        mensaje = "Se dirige a la cocina de postres";
+        break;
+    case COCINAPOSTRE:
+        mensaje = "Se dirige a la cocina de postres";
+        break;
+    case COCINANDOPOSTRE:
+        mensaje = "Se esta cocinando el plato de postre";
+        break;
+    case POSTRETERMINADO:
+        mensaje = "El plato de postre esta listo!";
+        break;
+    case ENTREGAPOSTRE:
+        mensaje = "se dirige a la mesa #"+QString::number(mesa->numeroDeMesa);
+        break;
+    case COMIENDOPOSTRE:
+        mensaje = "Orden de postres en la mesa";
+        break;
+    case COBROCUENTA:
+        mensaje = "Cobrando";
+        break;
+    case LAVARPOSTRE:
+        mensaje = "Se dirige al lavadero";
+        break;
+    case CUENTAACAJA:
+        mensaje = "Se dirige a la caja";
         break;
     }
     return mensaje;

@@ -54,7 +54,10 @@ ColaMensajes :: ColaMensajes(){
 QListWidgetItem * ColaMensajes :: imprimirSiguiente(){
     QListWidgetItem * item = new QListWidgetItem();
     Mensaje * mensaje = colaDeMensajes->desencolar()->dato;
-    item->setForeground(QBrush(mensaje->darColor(mensaje->color)));
+    QBrush my_brush;
+    QColor color = mensaje->darColor(mensaje->color);
+    my_brush.setColor(color);
+    item->setForeground(my_brush);
     item->setText(mensaje->contenido);
 
     return item;
@@ -75,7 +78,7 @@ QColor Mensaje :: darColor(ColorTexto color){
         return *ColorLavaplatos;
     case COLORCLIENTE:
         return *ColorCliente;
-    case COLORDEFAULT:
+    default:
         return *Default;
     }
 }

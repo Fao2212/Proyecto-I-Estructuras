@@ -2,12 +2,14 @@
 #include "Structs.h"
 
 struct Plato{
-	//Se puede usar la tarea de recetas
+
     Tipo tipo;
 	int tiempoDePreparacion;
     QString nombre;
 	int tiempoDeLavado;
 	double precio;
-    Ingrediente * ingredientes;
+    ListaSimple<QString> * ingredientes;
+
+    Plato(QString nombre,Tipo tipo,int tiempoDePreparacion,int tiempoDeLavado,double precio,ListaSimple<QString> * ingredientes);
 	
 };

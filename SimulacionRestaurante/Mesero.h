@@ -1,4 +1,5 @@
 #include "Structs.h"
+#include "QString"
 struct Mesero{
 	
     int id;
@@ -33,6 +34,7 @@ struct Mesero{
     void cobrarCuenta();
     Peticion * checkCocinas();//Revision de cocinas individual
     bool validarMesa(Peticion * peticion);
+    QString mostrarCola(int mult);
 
 };//Agregar un label / Una pantalla que diga que esta haciendo cada mesero, Tipo juego donde diga !Mesro Regogio la comida!!
 //Entrega un plato por persona, no entrega todo de una vez//Los tiempos pueden cambiarse  en tiempo de ejecucion

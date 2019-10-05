@@ -12,21 +12,21 @@ Cocinero :: Cocinero(Cocina * cocina){
     this->tiempo = 10;
     this-> atendidos = 0;
     this-> cocina = cocina;
+    this->id = 0;
 }
 
 Peticion * Cocinero :: tomarOrden(){
     if(cocina->peticiones->siguienteEnCola() != nullptr){
         Peticion * peticion = cocina->peticiones->desencolar()->dato;
-        recogerOrden(peticion);
-        return peticion;
+        return recogerOrden(peticion);
+
     }
     return nullptr;
 }
 
-void Cocinero :: recogerOrden(Peticion * peticion){
-    qDebug()<<peticion;
+Peticion * Cocinero :: recogerOrden(Peticion * peticion){
     switch (peticion->fase) {
-        case COCINAENTRADA:
+    case COCINAENTRADA:
         peticion->setFase(COCINANDOENTRADA);
         break;
     case COCINAPRINCIPAL:
@@ -36,12 +36,19 @@ void Cocinero :: recogerOrden(Peticion * peticion){
         peticion->setFase(COCINANDOPOSTRE);
         break;
     default:
+        qDebug()<<"Error en la fase";
+        qDebug()<<peticion->faseMensaje();
         break;
     }
     peticiones->encolar(peticion);
+    qDebug()<<"gAPIN Y BOWES";
+    qDebug()<<peticion->faseMensaje();
+    return peticion;
 }
 
 void Cocinero :: dejarOrden(){
+    qDebug()<<"Antes";
+    qDebug()<<peticiones->siguienteEnCola()->dato->fase;
     switch (peticiones->siguienteEnCola()->dato->fase) {
         case COCINANDOENTRADA:
         peticiones->siguienteEnCola()->dato->setFase(ENTRADATERMINADA);
@@ -55,7 +62,9 @@ void Cocinero :: dejarOrden(){
     default:
         break;
     }
-    cocina->peticiones->encolar(peticiones->desencolar()->dato);
+    qDebug()<<"sI PA?:";
+    qDebug()<<peticiones->siguienteEnCola()->dato->faseMensaje();
+    cocina->salida->encolar(peticiones->desencolar()->dato);
 }
 
 int Cocinero :: tiempoDeCoccion(int i){
@@ -70,13 +79,3 @@ QString Cocinero :: cocinandoPlato(int i){
     else
         return "error";
 }
-/*
-int Cocinero :: tiempoLavado(int i){
-    if(peticiones->siguienteEnCola()!=nullptr)
-        peticiones->siguienteEnCola()->dato->platos[i]->tiempoDeLavado;
-}
-
-int Cocinero :: precioPlato(int i){
-    if(peticiones->siguienteEnCola()!=nullptr)
-        peticiones->siguienteEnCola()->dato->platos[i]->precio;
-}*/

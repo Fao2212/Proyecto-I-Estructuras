@@ -17,12 +17,6 @@
 #include "qlistwidget.h"
 #include "Globals.h"
 
-
-
-
-
-
-
 void Restaurante :: crearMatriz(){
 
    int mesas = this->cantidadDeMesas;
@@ -77,7 +71,7 @@ Restaurante:: Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nomb
      qDebug()<<"Matriz creada";
      copiarMatriz(matriz);
      this->entrada = new EntradaDelRestaurante(6,this->tiempoDeGeneracionMinimo,this->tiempoDeGeneracionMaximo,
-                                               this->matriz,this->cantidadDeMesas);
+                                               this->matriz,this->cantidadDeMesas,this->mensajes);
      this->meseros = new ListaSimple<Mesero>();
      this->threadsMeseros = new ListaSimple<ThreadMesero>();
      this->tabla = new TablaPlatos(this->tiempoMinimoEntrada,this->tiempoMaximoEntrada,this->probabildadEntrada
@@ -95,7 +89,6 @@ Restaurante:: Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nomb
      this->lavadero = new Lavadero();
      this->caja = new Caja();
      this->menu = new Menu();
-     cargarMenu();
      menuglobal = this->menu;
      qDebug()<<"Creando meseros";
      setMeseros();
@@ -111,7 +104,7 @@ Restaurante:: Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nomb
          mesero->id = i+1;
          meseros->insertar(mesero);
          ThreadMesero * threadMesero = new ThreadMesero();
-         threadMesero->__init__(mesero,&mutexEntrada,this->mensajes);
+         threadMesero->__init__(mesero,&mutexColaCajero,&mutexColaLavadero,&mutexColaCocinaPostre,&mutexColaCocinaEntrada,&mutexColaCocinaPrincipal,this->mensajes);
          this->threadsMeseros->insertar(threadMesero);
      }
  }
@@ -168,28 +161,28 @@ Restaurante:: Restaurante(int cantidadDeMesas,int cantidadDeMeseros,QString nomb
      plato->tiempoDePreparacion = tiempo;
  }
 
- void Restaurante :: iniciarThreadMeseros(QListWidget * log){
+ void Restaurante :: iniciarThreadMeseros(){
      qDebug()<<"Inicializando meseros";
      Nodo<ThreadMesero> * temp = threadsMeseros->primerNodo;
      for (int i =0;i < cantidadDeMeseros;i++) {
-         temp->dato->log = log;
          temp->dato->start();
          qDebug()<<"Mesero # "+QString::number(i+1)+" inicializado.";
          temp = temp->siguiente;
      }
  }
 
- void Restaurante ::iniciarThreadCocineros(QListWidget *log){
+ void Restaurante ::iniciarThreadCocineros(){
      qDebug()<<"Inicializando cocineros";
      for (int i =0;i < 5;i++) {
          threadCocineros[i] = new ThreadCocinero();
-         threadCocineros[i]->__init__(cocineros[i],log,&mutexEntrada);
-         threadCocineros[i]->log = log;
+         if(i < 1)
+             threadCocineros[i]->__init__(cocineros[i],this->mensajes,&mutexColaCocinaEntrada);
+         else if(i < 3)
+             threadCocineros[i]->__init__(cocineros[i],this->mensajes,&mutexColaCocinaPrincipal);
+         else if(i < 5)
+             threadCocineros[i]->__init__(cocineros[i],this->mensajes,&mutexColaCocinaPostre);
          threadCocineros[i]->start();
          qDebug()<<"Cocinero # "+QString::number(i+1)+" inicializado.";
      }
 }
 
- void Restaurante :: cargarMenu(){
-
- }

@@ -1080,7 +1080,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>Entradas</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_4">
@@ -1344,6 +1344,19 @@
       <attribute name="title">
        <string>Status</string>
       </attribute>
+      <widget class="QLabel" name="labelStatus">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>60</y>
+         <width>201</width>
+         <height>431</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">

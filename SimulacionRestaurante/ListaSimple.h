@@ -16,7 +16,6 @@ struct ListaSimple{
     void insertar(T * dato){
         Nodo<T> * nuevo = new Nodo<T>(dato);
         if (estaVacia()){
-qDebug()<< "43";
             primerNodo = nuevo;
 }
         else{
@@ -67,7 +66,6 @@ qDebug()<< "43";
         return nullptr;
     }
     bool estaVacia(){
-        qDebug()<< "55";
         return primerNodo == nullptr;
     }
     int largo(){
@@ -82,6 +80,16 @@ qDebug()<< "43";
         return lar;
     }
 	
+    Nodo<T> * indexSearch(int i){
+        Nodo<T> * temp = primerNodo;
+        int cont = 0;
+        while(temp != nullptr){
+            if(cont == i)
+                return temp;
+            cont += 1;
+        }
+        return nullptr;
+    }
 	
 };
 

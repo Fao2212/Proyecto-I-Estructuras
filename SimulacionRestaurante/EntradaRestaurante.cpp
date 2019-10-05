@@ -3,13 +3,15 @@
 #include "Random.h"
 #include "Cliente.h"
 #include "Estado.h"
+#include "ListaSimple.h"
 #include "QDebug"
 #include "Mesa.h"
 #include "Cola.h"
+#include "ThreadCliente.h"
 
 
 EntradaDelRestaurante::EntradaDelRestaurante(int maximoDeGenerados,int tiempoDeGeneracionMinimo,int tiempoDeGeneracionMaximo,
-                                             Mesa * matriz[5][4],int cantidadDeMesas){
+                                             Mesa * matriz[5][4],int cantidadDeMesas,ColaMensajes * mensajes){
     this->estado = new Estado();
     this ->maximoDeGenerados = maximoDeGenerados;
     this ->tiempoDeGeneracion = tiempoDeGeneracionMaximo;
@@ -19,6 +21,8 @@ EntradaDelRestaurante::EntradaDelRestaurante(int maximoDeGenerados,int tiempoDeG
     copiarMatriz(matriz);
     this->cantidadDeMesas = cantidadDeMesas;
     this->espera = new Cola<GrupoDeClientes>();
+    this->mensajes = mensajes;
+    this->clientes = new ListaSimple<ThreadCliente>();
 }
 
 GrupoDeClientes * EntradaDelRestaurante::crearGrupo(){
@@ -27,6 +31,7 @@ GrupoDeClientes * EntradaDelRestaurante::crearGrupo(){
     GrupoDeClientes * grupo = new GrupoDeClientes();
     for(int i = 0; i < generados ;i++){
         grupo->grupo[i] = new Cliente(consecutivoDeClientes);
+        this->consecutivoDeClientes += 1;
     }
     this->consecutivoDeGrupos += 1;
     return grupo;
@@ -36,9 +41,10 @@ GrupoDeClientes * EntradaDelRestaurante::crearGrupo(){
 void EntradaDelRestaurante :: asignarGrupo(GrupoDeClientes *grupo){
 
     Mesa * mesa = seleccionMesa();
-    qDebug()<<mesa;
-    if(mesa != nullptr)
+    if(mesa != nullptr){
         mesa->llenarMesa(grupo);
+        crearThreadCliente(grupo);
+    }
     else
         espera->encolar(grupo);
 
@@ -53,13 +59,6 @@ Mesa * EntradaDelRestaurante ::seleccionMesa(){
      }
      return nullptr;
 }
-/*int main(int argc, char *argv[])
-{
-    EntradaDelRestaurante * eR = new EntradaDelRestaurante(new Estado(),6,2);
-    GrupoDeClientes * gC = eR->crearGrupo();
-    qDebug() << gC->groupSize();
-    return 0;
-}*/
 
 
 void EntradaDelRestaurante :: copiarMatriz(Mesa * matriz[5][4]){
@@ -78,4 +77,11 @@ void EntradaDelRestaurante :: mesaLiberada(){
    Mesa * mesa = seleccionMesa();
    if(mesa != nullptr)
        mesa->llenarMesa(espera->desencolar()->dato);
+}
+
+void EntradaDelRestaurante :: crearThreadCliente(GrupoDeClientes * grupo){
+    ThreadCliente * threadCliente = new ThreadCliente();
+    threadCliente->__init__(grupo,this->mensajes);
+    this->clientes->insertar(threadCliente);
+    threadCliente->start();
 }

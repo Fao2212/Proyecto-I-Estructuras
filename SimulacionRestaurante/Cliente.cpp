@@ -4,6 +4,7 @@
 #include "Random.h"
 #include "Globals.h"
 #include "Menu.h"
+#include "QDebug"
 Menu* menuglobal = menuglobal;
 TablaPlatos * tablaglobal = tablaglobal;
 //EL CLIENTE GUARDA EL PLATO QUE SELECCIONA Y ESPERA HASTA QUE LLEGA LA PETICION EN COMER
@@ -19,18 +20,27 @@ Cliente :: Cliente(int pos){
 
 Plato * Cliente :: tomarDecision(Peticion * peticion){
     switch (peticion->fase) {
-        case PEDIRENTRADA:
-            if(Random::Probabilidad(1000,tabla->entrada->probabilidad))
-                return seleccionPlato(tabla->entrada->tipo);
-            break;
+        case CREADA:
+            if(Random::Probabilidad(1000,tabla->entrada->probabilidad)){
+                this->plato = seleccionPlato(tabla->entrada->tipo);
+                return plato;
+            }
+            else
+                break;
         case PEDIDAPRINCIPAL:
-            if(Random::Probabilidad(1000,tabla->plato->probabilidad))
-                return seleccionPlato(tabla->plato->tipo);
-            break;
+            if(Random::Probabilidad(1000,tabla->plato->probabilidad)){
+                this->plato = seleccionPlato(PLATO);
+                return this->plato;
+            }
+            else
+                break;
         case PEDIRPOSTRE:
-            if(Random::Probabilidad(1000,tabla->postre->probabilidad))
-                return seleccionPlato(tabla->postre->tipo);
-            break;
+            if(Random::Probabilidad(1000,tabla->postre->probabilidad)){
+                this->plato = seleccionPlato(POSTRE);
+                return this->plato;
+            }
+            else
+                break;
         default:
             break;
     }

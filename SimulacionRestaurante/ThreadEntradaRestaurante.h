@@ -11,7 +11,6 @@ public:
     EntradaDelRestaurante * entrada;
     bool pausa, activo;
     QListWidget * logRestaurante;
-    QMutex * mutexEntrada;
     QLabel * contador;
     ColaMensajes * mensajes;
 
@@ -19,7 +18,7 @@ public:
 
     void run();
 
-    void __init__(EntradaDelRestaurante * entrada,QListWidget * logRestaurante,QMutex * mutexEntrada,QLabel * contador,ColaMensajes * mensajes);
+    void __init__(EntradaDelRestaurante * entrada,QListWidget * logRestaurante,QLabel * contador,ColaMensajes * mensajes);
     void pausar();
     void continuar();
 };

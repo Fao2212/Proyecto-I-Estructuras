@@ -9,17 +9,18 @@ class ThreadCliente : public QThread{
 public:
     GrupoDeClientes * grupo;
     bool pausa, activo;
-    QListWidget * log;
-    QMutex * mutexEntrada;
+    ColaMensajes * mensajes;
 
     ThreadCliente();
     ~ThreadCliente();
 
     void run();
 
-    void __init__(GrupoDeClientes * grupo,QListWidget * log,QMutex * mutexEntrada);
+    void __init__(GrupoDeClientes * grupo,ColaMensajes * mensajes);
     void pausar();
     void continuar();
+    void fasesComiendo(Peticion * peticion);
+    void fasesTerminandoComer(Peticion * peticion);
     void comer();
 };
 #endif // THREADCLIENTE_H

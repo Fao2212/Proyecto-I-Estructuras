@@ -44,7 +44,11 @@ public:
     Mesa * mesas[20] = {nullptr};
     ThreadEntradaRestaurante threadRestaurante;
     ThreadCocinero * threadCocineros[5] = {nullptr};
-    QMutex mutexEntrada;
+    QMutex mutexColaCocinaEntrada;
+    QMutex mutexColaCocinaPostre;
+    QMutex mutexColaCocinaPrincipal;
+    QMutex mutexColaLavadero;
+    QMutex mutexColaCajero;
     Cocinero * cocineros[5];
     ColaMensajes * mensajes;
 
@@ -71,8 +75,8 @@ public:
     int * getDisponible();
     void copiarMatriz(Mesa * matriz[5][4]);
     void cambiarTiempoGeneracion(int min, int max);
-    void iniciarThreadMeseros(QListWidget * log);
-    void iniciarThreadCocineros(QListWidget * log);
+    void iniciarThreadMeseros();
+    void iniciarThreadCocineros();
     void cargarMenu();
 
 	

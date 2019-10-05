@@ -11,7 +11,7 @@ struct GrupoDeClientes{
 
     int groupSize();
     int generarReserva();//tiene que comparar si el grupo coincide con la reserva ccrreada por el restaurante
-    void generarOrden();
+    bool generarOrden();
     void sentarEnMesa(Mesa * mesa);
     bool listoParaOrdenar();
     void SetFasePeticion(Peticion * peticion);

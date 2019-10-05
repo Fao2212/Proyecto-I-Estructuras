@@ -11,7 +11,7 @@ int Random::Random1(int seed,int range){
 }
 bool Random :: Probabilidad(int seed,int prob){
     int rand = Random1(seed,100);
-    if(rand < prob)
+    if(rand <= prob)
         return true;
     else
         return false;

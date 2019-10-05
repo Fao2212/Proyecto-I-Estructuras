@@ -32,13 +32,12 @@ void ThreadEntradaRestaurante :: run(){
     }
 }
 
-void ThreadEntradaRestaurante :: __init__(EntradaDelRestaurante * entrada,QListWidget * logRestaurante,QMutex * mutexEntrada,QLabel * contador
+void ThreadEntradaRestaurante :: __init__(EntradaDelRestaurante * entrada,QListWidget * logRestaurante,QLabel * contador
                                           ,ColaMensajes * mensajes){
     this->entrada = entrada;
     this->pausa = false;
     this->activo = true;
     this->logRestaurante = logRestaurante;
-    this->mutexEntrada = mutexEntrada;
     this->contador = contador;
     this->mensajes = mensajes;
 

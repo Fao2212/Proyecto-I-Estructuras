@@ -18,6 +18,7 @@ struct Peticion {
     void setFase(Fase state);
     QString platosActuales();
     QString faseActual();
+    QString faseMensaje();
 	
 };
 

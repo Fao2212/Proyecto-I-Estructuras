@@ -10,20 +10,15 @@ struct ListaDoble{
        primerNodo = ultimoNodo = nullptr;
    }
 
-   void insertar(T dato){
-       NodoD<T> nuevo = new NodoD<T>(dato);
+   void insertar(T * dato){
+       NodoD<T> * nuevo = new NodoD<T>(dato);
        if (primerNodo == nullptr){
            primerNodo = ultimoNodo = nuevo;
        }
        else{
-           if(primerNodo == ultimoNodo){
-               primerNodo->siguiente = nuevo;
-               ultimoNodo = primerNodo->siguiente;
-           }
-           else{
-               ultimoNodo->siguiente = nuevo;
-           }
-
+                ultimoNodo->siguiente = nuevo;
+                nuevo->anterior = ultimoNodo;
+                ultimoNodo = nuevo;
        }
    }
 

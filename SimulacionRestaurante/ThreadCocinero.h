@@ -8,14 +8,14 @@ class ThreadCocinero : public QThread{
 public:
     Cocinero * cocinero;
     bool pausa, activo;
-    QListWidget * log;
-    QMutex * mutexEntrada;
+    ColaMensajes * mensajes;
+    QMutex * mutexCocina;
 
     ThreadCocinero();
 
     void run();
 
-    void __init__(Cocinero * cocinero,QListWidget * log,QMutex * mutexEntrada);
+    void __init__(Cocinero * cocinero,ColaMensajes * mensajes,QMutex * mutexCocina);
     void pausar();
     void continuar();
     void cocinar();

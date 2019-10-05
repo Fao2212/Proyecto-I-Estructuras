@@ -2,7 +2,7 @@
 #include "Peticion.h"
 #include "Mesa.h"
 #include "Cliente.h"
-
+#include "QtDebug"
 GrupoDeClientes::GrupoDeClientes(){
     for(int i = 0;i<6;i++){
         this->grupo[i] = nullptr;
@@ -33,10 +33,15 @@ void GrupoDeClientes :: sentarEnMesa(Mesa * mesa){
     this->peticion = new Peticion(mesa,this->numeroDeGrupo);
 }
 
-void GrupoDeClientes :: generarOrden(){
+bool GrupoDeClientes :: generarOrden(){
+    bool alguienPidio = false;
     for(int i = 0;i < groupSize();i++){
-        this->peticion->platos[i] = this->grupo[i]->tomarDecision(peticion);
+        Plato *p = this->grupo[i]->tomarDecision(peticion);
+        if(p != nullptr)
+            alguienPidio =true;
+        this->peticion->platos[i] = p;
     }
+    return alguienPidio;
 }
 
 void GrupoDeClientes :: SetFasePeticion(Peticion * peticion){
@@ -67,12 +72,12 @@ void GrupoDeClientes :: pagarCuenta(){
     mesa->vaciarMesa();
 }
 
-bool GrupoDeClientes :: listoParaPagar(){
+bool GrupoDeClientes :: listoParaPagar(){//Cuidadito ehh
     for(int i = 0;i < groupSize();i++){
-        if(grupo[i]->quierePagar() == false)
-            return false;
+        if(grupo[i]->quierePagar() == true && peticion->fase == COBROCUENTA)
+            return true;
     }
-    return true;
+    return false;
 }
 
 bool GrupoDeClientes :: listoParaComer(){

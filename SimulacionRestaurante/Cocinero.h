@@ -18,7 +18,7 @@ struct Cocinero{
     QString cocinandoPlato(int i);
     int tiempoDeCoccion(int i);
 
-    void recogerOrden(Peticion * peticion);
+    Peticion * recogerOrden(Peticion * peticion);
     void dejarOrden();
 	
 };

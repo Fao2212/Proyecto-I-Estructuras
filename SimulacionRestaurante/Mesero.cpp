@@ -23,7 +23,7 @@ Mesero :: Mesero(Cocina * cocinaPrincipal,Cocina * cocinaEntrada,Cocina * cocina
 
 bool Mesero :: validarMesa(Peticion * peticion){
     for(int i = 0;i < Utilidades<Mesa*>::arraySize(mesasAsignadas) ;i++){
-        if(mesasAsignadas[i] == peticion->mesa){//Revision de comparacion
+        if(mesasAsignadas[i] == peticion->mesa){
             return true;
         }
     }
@@ -31,20 +31,19 @@ bool Mesero :: validarMesa(Peticion * peticion){
 }
 
 void Mesero :: recogerOrden(Peticion * peticion){
-    switch (peticiones->siguienteEnCola()->dato->fase) {
+    switch (peticion->fase) {
         case ENTRADATERMINADA:
-        peticiones->siguienteEnCola()->dato->setFase(ENTREGAENTRADA);
+        peticion->setFase(ENTREGAENTRADA);
         break;
     case PRINCIPALTERMINADA:
-        peticiones->siguienteEnCola()->dato->setFase(ENTREGAPRINCIPAL);
+        peticion->setFase(ENTREGAPRINCIPAL);
         break;
     case POSTRETERMINADO:
-        peticiones->siguienteEnCola()->dato->setFase(ENTREGAPOSTRE);
+        peticion->setFase(ENTREGAPOSTRE);
         break;
     default:
         break;
     }
-    peticiones->encolar(peticion);
 }
 
 void Mesero :: llevarLavar(){
@@ -104,10 +103,12 @@ void Mesero :: atenderPeticion(Peticion * peticion){
             llevarLavar();
             break;
         case CUENTAACAJA:
+            qDebug()<<"Pura vida";
             entregarCuenta();
             break;
         default:
-            break;//exepcioomn
+            qDebug()<<"No deberia entrar";
+            break;
 
     }
 }
@@ -115,37 +116,37 @@ void Mesero :: atenderPeticion(Peticion * peticion){
 Mesa * Mesero :: atenderMesa(){//Recorrer lista y ver si estan comiendo sino tomar orden
     for(int i = 0;i < Utilidades<Mesa*>::arraySize(mesasAsignadas) ;i++){
         if(mesasAsignadas[i]->necesitaMesero()){
-            tomarOrden(mesasAsignadas[i]);//esperar tiempo mesero * #clientes
+            tomarOrden(mesasAsignadas[i]);
             return mesasAsignadas[i];
         }
     }
     return nullptr;
 }
 
-Peticion * Mesero :: checkCocinas(){
-
-    if(cocinaEntrada->salida->siguienteEnCola() != nullptr){
-        Peticion * peticion = cocinaEntrada->salida->desencolar()->dato;
-        recogerOrden(peticion);
-        return peticion;
-    }
-    else if (cocinaPostres->salida->siguienteEnCola() != nullptr){
-        Peticion * peticion = cocinaPrincipal->salida->desencolar()->dato;
-        recogerOrden(peticion);
-        return peticion;
-    }
-    else if (cocinaPrincipal->salida->siguienteEnCola() != nullptr){
-        Peticion * peticion = cocinaPostres->salida->desencolar()->dato;
-        recogerOrden(peticion);
-        return peticion;
-    }
-    return nullptr;
-}
-
 void Mesero :: tomarOrden(Mesa * mesa){
-    mesa->grupo->generarOrden();
-    peticiones->encolar(mesa->grupo->peticion);
-    mesa->grupo->setTodosEsperando(false);
+    if(mesa->grupo->generarOrden()){
+        peticiones->encolar(mesa->grupo->peticion);
+        mesa->grupo->setTodosEsperando(false);
+    }
+    else{
+        qDebug()<<"Tomar Orden";
+        qDebug()<<mesa->grupo->peticion->faseMensaje();
+        switch (mesa->grupo->peticion->fase) {
+        case CREADA:
+            mesa->grupo->peticion->setFase(COCINAPRINCIPAL);
+            tomarOrden(mesa);
+            break;
+        case COCINAPRINCIPAL:
+            mesa->grupo->peticion->setFase(COCINAPOSTRE);
+            tomarOrden(mesa);
+            break;
+        case COCINAPOSTRE:
+            mesa->grupo->peticion->setFase(COBROCUENTA);
+            break;
+        default:
+            qDebug()<<"ERROR cuando nadie ordena";
+        }
+    }
 }
 
 Peticion * Mesero :: siguientePeticion(){
@@ -156,22 +157,43 @@ Peticion * Mesero :: siguientePeticion(){
              peticion->setFase(COCINAENTRADA);
              atenderPeticion(peticion);
            }
-           else
+           else{
             atenderPeticion(peticion);
-           return peticion;
+            return peticion;
+           }
        }
    }
    return nullptr;
 }
 
-void Mesero :: dejarOrden(){
-    peticiones->primerNodo->dato->mesa->grupo->peticion = peticiones->desencolar()->dato;
-    peticiones->primerNodo->dato->mesa->grupo->setTodosComiendo(true);
+void Mesero :: dejarOrden(){//Esta llegando sin peticion
+    GrupoDeClientes * grupo = peticiones->primerNodo->dato->mesa->grupo;
+    grupo->peticion = peticiones->desencolar()->dato;
+    grupo->setTodosComiendo(true);
 }
 
 void Mesero :: cobrarCuenta(){
+
     peticiones->primerNodo->dato->mesa->grupo->setTodosComiendo(false);
-    peticiones->primerNodo->dato->mesa->grupo->setTodosComiendo(false);
+    peticiones->primerNodo->dato->mesa->grupo->setTodosEsperando(false);
 }
 
 
+QString Mesero :: mostrarCola(int mult){
+    Nodo<Peticion>* temp = peticiones->primerNodo;
+    int proximas = 10*mult;
+    QString mensaje = "";
+    for(int i = 0; i<proximas;i++){
+        if(temp != nullptr){
+            QString construir = "Orden # "+QString::number(temp->dato->grupo)+"\n"+
+                                "Mesa # "+QString::number(temp->dato->mesa->numeroDeMesa)+"\n"+
+                                "Platos:["+temp->dato->platosActuales()+"]"+"\n"+
+                                "Fase: "+temp->dato->faseMensaje();
+            mensaje += construir;
+            temp = temp->siguiente;
+        }
+        else
+            break;
+    }
+    return mensaje;
+}

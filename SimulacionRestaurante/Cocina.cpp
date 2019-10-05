@@ -3,6 +3,8 @@
 #include "Cocinero.h"
 #include "Cola.h"
 #include "Estado.h"
+#include "Mesa.h"
+#include "Peticion.h"
 
 Cocina :: Cocina(TipoDeCocina tipo){
     this->peticiones = new Cola<Peticion>();
@@ -26,4 +28,23 @@ Cocina :: Cocina(TipoDeCocina tipo){
             cocineros[2] =nullptr;
         break;
     }
+}
+
+QString Cocina :: mostrarCola(int mult){
+    Nodo<Peticion>* temp = peticiones->primerNodo;
+    int proximas = 10*mult;
+    QString mensaje = "";
+    for(int i = 0; i<proximas;i++){
+        if(temp != nullptr){
+            QString construir = "Orden # "+QString::number(temp->dato->grupo)+"\n"+
+                                "Mesa # "+QString::number(temp->dato->mesa->numeroDeMesa)+"\n"+
+                                "Platos:["+temp->dato->platosActuales()+"]"+"\n"+
+                                "Fase: "+temp->dato->faseMensaje();
+            mensaje += construir;
+            temp = temp->siguiente;
+        }
+        else
+            break;
+    }
+    return mensaje;
 }

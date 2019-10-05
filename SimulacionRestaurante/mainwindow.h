@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "Restaurante.h"
 #include "GUIMensaje.h"
+#include "ThreadDatos.h"
 #include "ThreadMensaje.h"
 
 QT_BEGIN_NAMESPACE
@@ -18,15 +19,21 @@ public:
 
     ColaMensajes * mensajes = new ColaMensajes();
     ThreadMensaje * threadMensaje = new ThreadMensaje();
-    Restaurante * restaurante = new Restaurante(17,8,"Rostipollos",10,20,10,20,10,
-                                                20,10,20,10,20,10,5,mensajes);
+    ThreadDatos * threadDatos = new ThreadDatos();
+    Restaurante * restaurante = new Restaurante(7,4,"Rostipollos",8,8,7,8,80,
+                                                9,9,70,10,10,50,5,mensajes);
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void showData(int i);
 
 private slots:
 
     void on_pushButton_clicked();
+
+    void on_Mesero1_clicked();
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -9,4 +9,6 @@ struct Menu{
     Menu();
 
     Plato * platoAlAzar(Tipo tipo);
+    void menuDefault();
+    void imprimirPlatos();
 };
